@@ -1,0 +1,46 @@
+
+
+<script>
+function myFunction() {
+  const previousRow = {};
+  const colsChanged = {};
+  let dark = false;
+
+  Array.from(document.querySelectorAll('tbody tr')).forEach((tr, rowIdx) => {
+    Array.from(tr.children).forEach((td, colIdx) => {
+      if (rowIdx > 0 && previousRow[colIdx].text === td.innerText) {
+        previousRow[colIdx].elem.setAttribute('rowspan', ++previousRow[colIdx].span);
+        colsChanged[colIdx] = false;
+        td.remove();
+      } else {
+        previousRow[colIdx] = { span: 1, text: td.innerText, elem: td, dark };
+        colsChanged[colIdx] = true;
+      }
+    });
+    const rowChanged = Object.values(colsChanged).every(Boolean);
+    dark = rowChanged && rowIdx > 0 ? !dark : dark;
+    if (dark) {
+      tr.classList.add('dark');
+    }
+  });
+}
+</script>
+<body onload="myFunction()">
+	<table class="iksweb", border="1">
+		<tbody>
+		{% for m in schedule -%}
+			<tr>
+				<td>{{m.schedule_day_id}}</td>
+				<td>{{m.schedule_place_id}}</td>
+				<td>{{m.schedule_number_id}}</td>
+				<td>{{m.schedule_time_id}}</td>
+				<td>{{m.schedule_name_id}}</td>
+				<td>{{m.schedule_type_id}}</td>
+				<td>{{m.schedule_teacher_id}}</td>
+				<td>{{m.schedule_aud_id}}</td>
+			</tr>
+		{% endfor -%}
+		</tbody>
+	</table>
+</body>
+
