@@ -35,7 +35,7 @@ class DataBase:
                 print("Ошибка чтения из БД")
             return []
 
-        if role == 'teahcer':
+        if role == 'teacher':
             [user_name], = self.__cur.execute('SELECT name FROM users WHERE id=?', (user,))
             print(user_name)
             [name], = self.__cur.execute('SELECT id FROM schedule_teacher WHERE schedule_teacher_text=?', (user_name,))
