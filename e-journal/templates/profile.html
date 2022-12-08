@@ -1,0 +1,17 @@
+{% include 'base.html' %}
+<body>
+
+
+{% block content -%}
+    {% block user -%}
+<ul1>
+<li1><a>ФИО: {{user.name}}</a></li1>
+<li1><a>Роль: {{user.role}}</a></li1>
+<li1><a>Группа: {{user.group_name}}</a></li1>
+<li1><a>Email: {{user.email}}</a></li1>
+</ul1>
+    {% endblock user -%}
+{% endblock content -%}
+
+</body>
+</html>

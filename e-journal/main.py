@@ -55,24 +55,34 @@ def before_request():
 
 @app.route("/")
 def index():
-    return render_template("index.html", menu=dbase.getMenu(), title="Главная")
+    try:
+        user = current_user.get_id()
+        role = dbase.getUserRole(user)
+    except: role = ''
+    return render_template("index.html", menu=dbase.getMenu(), role = role, title="Главная")
 
 @app.route("/login", methods=["POST", "GET"])
 def login():
+    try:
+        user = current_user.get_id()
+        role = dbase.getUserRole(user)
+        if role: return redirect(url_for('index'))
+    except: role = ''
     if request.method == "POST":
         user = dbase.getUserByEmail(request.form['email'])
         if user and check_password_hash(user['psw'], request.form['psw']):
             userlogin = UserLogin().create(user)
             login_user(userlogin)
-            return redirect(url_for('success'))
+            return redirect(url_for('profile'))
 
-    return render_template("login.html", menu=dbase.getMenu(), title="Aвтоpизaция")
+    return render_template("login.html", menu=dbase.getMenu(), role = role, title="Вход")
 
-@app.route("/success")
+@app.route("/profile")
 @login_required
-def success():
+def profile():
     user = current_user.get_id()
-    return render_template("success.html", menu=dbase.getMenu(), user=dbase.getUserInfo(user))
+    role = dbase.getUserRole(user)
+    return render_template("profile.html", menu=dbase.getMenu(), role = role, user=dbase.getUserInfo(user), title="Личный кабинет")
 
 @app.route('/logout')
 @login_required
@@ -82,6 +92,11 @@ def logout():
 
 @app.route("/register", methods=["POST", "GET"])
 def register():
+    try:
+        user = current_user.get_id()
+        role = dbase.getUserRole(user)
+        if role: return redirect(url_for('index'))
+    except: role = ''
     if request.method == "POST":
         if len(request.form['name']) > 4 and len(request.form['email']) > 4 \
             and len(request.form['psw']) > 4 and request.form['psw'] == request.form['psw2']:
@@ -89,24 +104,106 @@ def register():
             res = dbase.addUser(request.form['name'], request.form['code'], request.form['email'], hash)
             if res:
                 return redirect(url_for('login'))
-    return render_template("register.html", menu=dbase.getMenu(), title="")
+    return render_template("register.html", menu=dbase.getMenu(), role = role, title="Регистрация")
 
 @app.route("/schedule")
+@login_required
 def schedule():
     user = current_user.get_id()
-    return render_template("schedule.html", menu=dbase.getMenu(), schedule=dbase.getSchedule(user), title="Главная")
+    role = dbase.getUserRole(user)
+    return render_template("schedule.html", menu=dbase.getMenu(), schedule=dbase.getSchedule(user), role = role, title="Быстрое расписание")
+
+
+@app.route("/schedule_global", methods=["POST", "GET"])
+def schedule_global():
+    try:
+        user = current_user.get_id()
+        role = dbase.getUserRole(user)
+    except: role = ''
+    if request.method == "POST":
+        try:
+            if request.form['group']:
+                group = request.form['group']
+                return render_template("schedule_global.html", menu=dbase.getMenu(), schedule=dbase.getGroupSchedule(group), role=role, group=dbase.getGroupList(), title="Расписание")
+        except: print ('1')
+    return render_template("schedule_global.html", menu=dbase.getMenu(), role = role, group=dbase.getGroupList(), title="Расписание")
+
+@app.route("/schedule_teacher", methods=["POST", "GET"])
+def schedule_teacher():
+    try:
+        user = current_user.get_id()
+        role = dbase.getUserRole(user)
+    except: role = ''
+    if request.method == "POST":
+        try:
+            if request.form['teacher']:
+                teacher = request.form['teacher']
+                return render_template("schedule_teacher.html", menu=dbase.getMenu(), schedule=dbase.getTeacherSchedule(teacher), role=role, teacher=dbase.getTeacherList(), title="Расписание")
+        except: print ('1')
+    return render_template("schedule_teacher.html", menu=dbase.getMenu(), role = role, teacher=dbase.getTeacherList(), title="Расписание")
+
+@app.route("/schedule_aud", methods=["POST", "GET"])
+def schedule_aud():
+    try:
+        user = current_user.get_id()
+        role = dbase.getUserRole(user)
+    except: role = ''
+    if request.method == "POST":
+        try:
+            if request.form['aud']:
+                aud = request.form['aud']
+                return render_template("schedule_aud.html", menu=dbase.getMenu(), schedule=dbase.getAudSchedule(aud), role=role, aud=dbase.getAudList(), title="Расписание")
+        except: print ('1')
+    return render_template("schedule_aud.html", menu=dbase.getMenu(), role = role, aud=dbase.getAudList(), title="Расписание")
+
+@app.route("/schedule_global_redactor",  methods=["POST", "GET"])
+@login_required
+def schedule_global_redactor():
+    user = current_user.get_id()
+    role = dbase.getUserRole(user)
+    if role == "moderator":
+        user = current_user.get_id()
+        if request.method == "POST":
+            try:
+                i=1
+                while i != 4:
+                    res = dbase.addScheduleBlock(request.form[f'schedule_group{str(i)}'], request.form[f'name{str(i)}'], request.form[f'day{str(i)}'], request.form[f'place{str(i)}'], request.form[f'time{str(i)}'], request.form[f'teacher{str(i)}'], request.form[f'aud{str(i)}'])
+                    i = i+1
+                if res:
+                    return render_template("schedule_global_redactor.html", role = role, schedule=dbase.getGroupSchedule(request.form['schedule_group']),  menu=dbase.getMenu(), group=dbase.getGroupList(), aud=dbase.getAudList(), teacher=dbase.getTeacherList(), name=dbase.getNameList(), title="Редактирование расписания")
+            except: print('1')
+
+
+        return render_template("schedule_global_redactor.html", menu=dbase.getMenu(), role = role, group=dbase.getGroupList(), aud=dbase.getAudList(), teacher=dbase.getTeacherList(), name=dbase.getNameList(), title="Редактирование расписания")
+    else: return render_template("index.html", menu=dbase.getMenu(), title="Редактирование расписания")
 
 @app.route("/schedule_redactor",  methods=["POST", "GET"])
+@login_required
 def schedule_redactor():
     user = current_user.get_id()
-    if request.method == "POST":
-        group = request.form['group']
-        if group:
-            return render_template("schedule_redactor.html", menu=dbase.getMenu(), group=dbase.getGroupList(), schedule=dbase.getGroupSchedule(group), aud=dbase.getAudList(), teacher=dbase.getTeacherList(), name=dbase.getNameList(), title="Главная")
+    role = dbase.getUserRole(user)
+    if role == "moderator":
+        user = current_user.get_id()
+        if request.method == "POST":
+            try:
+                if request.form['group']:
+                    group = request.form['group']
+                    return render_template("schedule_redactor.html",  role=role, menu=dbase.getMenu(), group=dbase.getGroupList(), schedule=dbase.getGroupSchedule(group), aud=dbase.getAudList(), teacher=dbase.getTeacherList(), name=dbase.getNameList(), title="Редактирование расписания")
+            except: print('1')
+            try:
+                res = dbase.addScheduleBlock(request.form['schedule_group'], request.form['name'], request.form['day'], request.form['place'], request.form['time'], request.form['teacher'], request.form['aud'])
+                if res:
+                    return render_template("schedule_redactor.html", role = role, schedule=dbase.getGroupSchedule(request.form['schedule_group']),  menu=dbase.getMenu(), group=dbase.getGroupList(), aud=dbase.getAudList(), teacher=dbase.getTeacherList(), name=dbase.getNameList(), title="Редактирование расписания")
+            except: print('1')
+            try:
+                res = dbase.deleteScheduleBlock(request.form['schedule_group_delete'],  request.form['day_delete'], request.form['place_delete'], request.form['time_delete'])
+                if res:
+                    return render_template("schedule_redactor.html", role = role, schedule=dbase.getGroupSchedule(request.form['schedule_group_delete']),  menu=dbase.getMenu(), group=dbase.getGroupList(), aud=dbase.getAudList(), teacher=dbase.getTeacherList(), name=dbase.getNameList(), title="Редактирование расписания")
+            except: print('1')
 
 
-
-    return render_template("schedule_redactor.html", menu=dbase.getMenu(), group=dbase.getGroupList(), aud=dbase.getAudList(), teacher=dbase.getTeacherList(), name=dbase.getNameList(), title="Главная")
+        return render_template("schedule_redactor.html", menu=dbase.getMenu(), role = role, group=dbase.getGroupList(), aud=dbase.getAudList(), teacher=dbase.getTeacherList(), name=dbase.getNameList(), title="Редактирование расписания")
+    else: return render_template("index.html", menu=dbase.getMenu(), title="Редактирование расписания")
 
 if __name__ == "__main__":
     app.run(debug=True)

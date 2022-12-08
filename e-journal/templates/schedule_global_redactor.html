@@ -1,0 +1,130 @@
+{% include 'base.html' %}
+
+<table class="iksweb">
+	<tbody>
+		<tr>
+			<td>
+				<p>Добавить предмет</p>
+<form action="/schedule_global_redactor" method="post" class="form-contact">
+	<p><select name="schedule_group1">
+		<option>Выберите группу</option>
+		{% for g in group -%}
+		<option value="{{ g.id }}">{{ g.schedule_group_text }}</option>
+		{% endfor -%}
+	</select></p>
+		<p><select name="name1">
+		<option>Выберите предмет</option>
+		{% for n in name -%}
+		<option value="{{ n.id }}">{{ n.schedule_name_text }} {{ n.schedule_name_text_type }}</option>
+		{% endfor -%}
+	</select></p>
+		<p><select name="day1">
+		<option>Выберите день недели</option>
+		<option value="1">Понедельник</option>
+		<option value="2">Вторник</option>
+	</select></p>
+		<p><select name="place1">
+		<option>Выберите неделю</option>
+		<option value="1">Верхняя</option>
+		<option value="2">Нижняя</option>
+	</select></p>
+		<p><select name="time1">
+		<option>Выберите время</option>
+		<option value="1">900</option>
+		<option value="2">1040</option>
+	</select></p>
+		<p><select name="teacher1">
+		<option>Выберите преподователя</option>
+		{% for t in teacher -%}
+		<option value="{{ t.id }}">{{ t.schedule_teacher_text }}</option>
+		{% endfor -%}
+	</select></p>
+		<p><select name="aud1">
+		<option>Выберите аудиторию</option>
+		{% for a in aud -%}
+		<option value="{{ a.id }}">{{ a.schedule_aud_text }}</option>
+		{% endfor -%}
+	</select></p>
+    	<p><select name="schedule_group2">
+		<option>Выберите группу</option>
+		{% for g in group -%}
+		<option value="{{ g.id }}">{{ g.schedule_group_text }}</option>
+		{% endfor -%}
+	</select></p>
+		<p><select name="name2">
+		<option>Выберите предмет</option>
+		{% for n in name -%}
+		<option value="{{ n.id }}">{{ n.schedule_name_text }} {{ n.schedule_name_text_type }}</option>
+		{% endfor -%}
+	</select></p>
+		<p><select name="day2">
+		<option>Выберите день недели</option>
+		<option value="1">Понедельник</option>
+		<option value="2">Вторник</option>
+	</select></p>
+		<p><select name="place2">
+		<option>Выберите неделю</option>
+		<option value="1">Верхняя</option>
+		<option value="2">Нижняя</option>
+	</select></p>
+		<p><select name="time2">
+		<option>Выберите время</option>
+		<option value="1">900</option>
+		<option value="2">1040</option>
+	</select></p>
+		<p><select name="teacher2">
+		<option>Выберите преподователя</option>
+		{% for t in teacher -%}
+		<option value="{{ t.id }}">{{ t.schedule_teacher_text }}</option>
+		{% endfor -%}
+	</select></p>
+		<p><select name="aud2">
+		<option>Выберите аудиторию</option>
+		{% for a in aud -%}
+		<option value="{{ a.id }}">{{ a.schedule_aud_text }}</option>
+		{% endfor -%}
+	</select></p>
+    	<p><select name="schedule_group3">
+		<option>Выберите группу</option>
+		{% for g in group -%}
+		<option value="{{ g.id }}">{{ g.schedule_group_text }}</option>
+		{% endfor -%}
+	</select></p>
+		<p><select name="name3">
+		<option>Выберите предмет</option>
+		{% for n in name -%}
+		<option value="{{ n.id }}">{{ n.schedule_name_text }} {{ n.schedule_name_text_type }}</option>
+		{% endfor -%}
+	</select></p>
+		<p><select name="day3">
+		<option>Выберите день недели</option>
+		<option value="1">Понедельник</option>
+		<option value="2">Вторник</option>
+	</select></p>
+		<p><select name="place3">
+		<option>Выберите неделю</option>
+		<option value="1">Верхняя</option>
+		<option value="2">Нижняя</option>
+	</select></p>
+		<p><select name="time3">
+		<option>Выберите время</option>
+		<option value="1">900</option>
+		<option value="2">1040</option>
+	</select></p>
+		<p><select name="teacher3">
+		<option>Выберите преподователя</option>
+		{% for t in teacher -%}
+		<option value="{{ t.id }}">{{ t.schedule_teacher_text }}</option>
+		{% endfor -%}
+	</select></p>
+		<p><select name="aud3">
+		<option>Выберите аудиторию</option>
+		{% for a in aud -%}
+		<option value="{{ a.id }}">{{ a.schedule_aud_text }}</option>
+		{% endfor -%}
+	</select></p>
+<p><input type="submit" value="Добавить" />
+</form>
+			</td>
+
+

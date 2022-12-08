@@ -1,5 +1,19 @@
 {% include 'base.html' %}
 
+{% block content %}
+<form action="/schedule_aud" method="post" name="list">
+	<p><select name="aud">
+		<option>Выберите из списка</option>
+		{% for a in aud -%}
+		<option value="{{ a.id }}">{{ a.schedule_aud_text }}</option>
+		{% endfor -%}
+	</select></p>
+	<p><input type="submit" value="Отправить"></p>
+</form>
+{% endblock %}
+
+
+
 <script>
 function myFunction() {
   const previousRow = {};
@@ -25,11 +39,15 @@ function myFunction() {
   });
 }
 </script>
+
+
+
 <body onload="myFunction()">
 	<table class="iksweb", border="1">
 		<tbody>
 		{% for m in schedule -%}
 			<tr>
+				<td>{{m.schedule_group_id}}</td>
 				<td>{{m.schedule_day_id}}</td>
 				<td>{{m.schedule_place_id}}</td>
 				<td>{{m.schedule_number_id}}</td>
@@ -42,5 +60,6 @@ function myFunction() {
 		{% endfor -%}
 		</tbody>
 	</table>
+<a href="schedule_global">Расписание по группам</a>
+<a href="schedule_teacher">Расписание по преподователям</a>
 </body>
-
