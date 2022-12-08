@@ -75,7 +75,7 @@ class DataBase:
             self.__cur.execute("INSERT INTO users VALUES(NULL, ?, ?, ?, ?, ?, ?)", (name, role, group_name, email, hpsw, code))
             self.__db.commit()
         except sqlite3.Error as e:
-            print("Ошибка добавления пользователя в БД "+str(e))
+            print("Ошибка добавления пользователя в БД " + str(e))
             return False
 
         return True
@@ -150,7 +150,7 @@ class DataBase:
             res = self.__cur.fetchone()
             return res
         except sqlite3.Error as e:
-            print("Ошибка получения данных из БД "+str(e))
+            print("Ошибка получения данных из БД " + str(e))
         return False
 
     def getUserByEmail(self, email):
