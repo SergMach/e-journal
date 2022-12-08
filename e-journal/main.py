@@ -98,8 +98,7 @@ def register():
         if role: return redirect(url_for('index'))
     except: role = ''
     if request.method == "POST":
-        if len(request.form['name']) > 4 and len(request.form['email']) > 4 \
-            and len(request.form['psw']) > 4 and request.form['psw'] == request.form['psw2']:
+        if len(request.form['name']) > 1 and len(request.form['email']) > 1 and len(request.form['psw']) > 1 and request.form['psw'] == request.form['psw2']:
             hash = generate_password_hash(request.form['psw'])
             res = dbase.addUser(request.form['name'], request.form['code'], request.form['email'], hash)
             if res:
