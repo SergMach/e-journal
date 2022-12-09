@@ -1,4 +1,4 @@
-from flask import Flask, render_template,  request, g, redirect, url_for, flash
+from flask import Flask, render_template,  request, g, redirect, url_for, flash, render_template_string
 from flask_login import LoginManager, login_user, login_required, logout_user, current_user
 from UserLogin import UserLogin
 
@@ -16,6 +16,10 @@ app.config.from_object(__name__)
 app.config.update(dict(DATABASE=os.path.join(app.root_path, 'e_journal.db')))
 
 login_manager = LoginManager(app)
+
+@app.errorhandler(404)
+def page_not_found():
+    return render_template_string('PageNotFound {{ errorCode }}', errorCode='404'), 404
 
 @login_manager.user_loader
 def load_user(user_id):
@@ -120,7 +124,7 @@ def attend():
     if role == 'teacher':
 
         return render_template("attend.html", menu=dbase.getMenu(), role = role, title="Посещаемость")
-    return render_template("attend.html", menu=dbase.getMenu(), role = role, title="Посещаемость")
+    return page_not_found()
 
 @app.route("/schedule_global", methods=["POST", "GET"])
 def schedule_global():
