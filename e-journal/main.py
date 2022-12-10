@@ -79,14 +79,14 @@ def login():
             login_user(userlogin)
             return redirect(url_for('profile'))
 
-    return render_template("login.html", menu=dbase.getMenu(), role = role, title="Вход")
+    return render_template("login.html", menu=dbase.getMenu(), role=role, title="Вход")
 
 @app.route("/profile")
 @login_required
 def profile():
     user = current_user.get_id()
     role = dbase.getUserRole(user)
-    return render_template("profile.html", menu=dbase.getMenu(), role = role, user=dbase.getUserInfo(user), title="Личный кабинет")
+    return render_template("profile.html", menu=dbase.getMenu(), role=role, user=dbase.getUserInfo(user), title="Личный кабинет")
 
 @app.route('/logout')
 @login_required
@@ -107,14 +107,14 @@ def register():
             res = dbase.addUser(request.form['name'], request.form['code'], request.form['email'], hash)
             if res:
                 return redirect(url_for('login'))
-    return render_template("register.html", menu=dbase.getMenu(), role = role, title="Регистрация")
+    return render_template("register.html", menu=dbase.getMenu(), role=role, title="Регистрация")
 
 @app.route("/schedule")
 @login_required
 def schedule():
     user = current_user.get_id()
     role = dbase.getUserRole(user)
-    return render_template("schedule.html", menu=dbase.getMenu(), schedule=dbase.getSchedule(user), role = role, title="Быстрое расписание")
+    return render_template("schedule.html", menu=dbase.getMenu(), schedule=dbase.getSchedule(user), role=role, title="Быстрое расписание")
 
 @app.route("/attend")
 @login_required
@@ -122,8 +122,9 @@ def attend():
     user = current_user.get_id()
     role = dbase.getUserRole(user)
     if role == 'teacher':
-
-        return render_template("attend.html", menu=dbase.getMenu(), role = role, title="Посещаемость")
+        return render_template("attend.html", menu=dbase.getMenu(), attend=dbase.getAttend(user), subject=dbase.getSubject(user), role=role, title="Посещаемость")
+    elif role == 'moderator':
+        return render_template("attend.html", menu=dbase.getMenu(), attend=dbase.getAttend(user), subject=dbase.getSubject(user), role=role, title="Посещаемость")
     return page_not_found()
 
 @app.route("/schedule_global", methods=["POST", "GET"])
