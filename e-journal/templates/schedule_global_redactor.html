@@ -15,69 +15,70 @@
 
 <table class="iksweb", border="1">
 	<tbody>
-	<form action="/schedule_global_redactor" method="post" class="form-contact">
-	{% for i in number -%}
-
-		<tr>
-			<td><p><select name="schedule_group">
-		<option value="{{schedule_group}}" selected>Добавьте пары</option>
-	</select></p>
-		</td>
-			<td>
-						<p><select name="day">
-		<option></option>
-		<option value="1">Понедельник</option>
-		<option value="2">Вторник</option>
-		<option value="3">Среда</option>
-		<option value="4">Четверг</option>
-		<option value="5">Пятница</option>
-		<option value="6">Суббота</option>
-	</select></p>
-			</td>
-			<td>
-						<p><select name="place">
-		<option></option>
-		<option value="1">Верхняя</option>
-		<option value="2">Нижняя</option>
-	</select></p>
-			</td>
-			<td>
-						<p><select name="time">
-		<option></option>
-		<option value="1">9:00 - 10:30</option>
-		<option value="2">10:40 - 12:10</option>
-		<option value="3">12:50 - 14:20</option>
-		<option value="4">14:30 - 16:00</option>
-		<option value="5">16:10 - 17:40</option>
-		<option value="6">17:50 - 19:20</option>
-		<option value="7">19:30 - 21:00</option>
-	</select></p>
-			</td>
-			<td>
-				<p><select name="name">
-		<option></option>
-			{% for n in name -%}
-			<option value="{{ n.id }}">{{ n.list_name }} {{ n.list_type }}</option>
-			{% endfor -%}
-	</select></p>
-			</td>
-			<td>		<p><select name="teacher">
-		<option></option>
-		{% for t in teacher -%}
-		<option value="{{ t.id }}">{{ t.list_teacher }}</option>
+		<form action="/schedule_global_redactor" method="post" class="form-contact">
+		{% for i in number -%}
+			<tr>
+				<td>
+					<p><select name="schedule_group">
+						<option value="{{schedule_group}}" selected>Добавьте пары</option>
+					</select></p>
+				</td>
+				<td>
+					<p><select name="day">
+						<option></option>
+						<option value="1">Понедельник</option>
+						<option value="2">Вторник</option>
+						<option value="3">Среда</option>
+						<option value="4">Четверг</option>
+						<option value="5">Пятница</option>
+						<option value="6">Суббота</option>
+					</select></p>
+				</td>
+				<td>
+					<p><select name="place">
+						<option></option>
+						<option value="1">Верхняя</option>
+						<option value="2">Нижняя</option>
+					</select></p>
+				</td>
+				<td>
+					<p><select name="time">
+						<option></option>
+						<option value="1">9:00 - 10:30</option>
+						<option value="2">10:40 - 12:10</option>
+						<option value="3">12:50 - 14:20</option>
+						<option value="4">14:30 - 16:00</option>
+						<option value="5">16:10 - 17:40</option>
+						<option value="6">17:50 - 19:20</option>
+						<option value="7">19:30 - 21:00</option>
+					</select></p>
+				</td>
+				<td>
+					<p><select name="name">
+						<option></option>
+						{% for n in name -%}
+						<option value="{{ n.id }}">{{ n.list_name }} {{ n.list_type }}</option>
+						{% endfor -%}
+					</select></p>
+				</td>
+				<td>		
+					<p><select name="teacher">
+						<option></option>
+						{% for t in teacher -%}
+						<option value="{{ t.id }}">{{ t.list_teacher }}</option>
+						{% endfor -%}
+					</select></p></td>
+				<td>
+					<p><select name="aud">
+						<option></option>
+						{% for a in aud -%}
+						<option value="{{ a.id }}">{{ a.schedule_aud_text }}</option>
+						{% endfor -%}
+					</select></p>
+				</td>
+			</tr>
 		{% endfor -%}
-	</select></p></td>
-			<td>
-				<p><select name="aud">
-		<option></option>
-		{% for a in aud -%}
-		<option value="{{ a.id }}">{{ a.schedule_aud_text }}</option>
-		{% endfor -%}
-	</select></p>
-			</td>
-		</tr>
-	{% endfor -%}
 
-	<tr><p><input type="submit" value="Добавить" /></form></tr>
+		<tr><p><input type="submit" value="Добавить" /></form></tr>
 	</tbody>
 </table>

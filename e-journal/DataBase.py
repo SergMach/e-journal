@@ -144,13 +144,23 @@ class DataBase:
             return []
 
 ####################################################
-    def getAttend(self, user):
+    # def getAttend(self, user):
+    #     try:
+    #         self .__cur.execute(f'SELECT attend.attend_id, students_name.students_name_text AS full_name, schedule_group.schedule_group_text AS group_a, schedule_name.schedule_name_text AS subject, schedule_teacher.schedule_teacher_text AS teacher, schedule_name.schedule_name_text_type AS type, attend.presence, attend.date  FROM attend JOIN schedule_group ON attend.group_a = schedule_group.id JOIN schedule_name ON attend.subject = schedule_name.id JOIN students_name ON attend.full_name = students_name.id  JOIN schedule_teacher ON attend.teacher = schedule_teacher.id  WHERE trim(teacher) LIKE '{переменная с именем препода}' AND trim(group_a) LIKE '{переменная с названием группы}' AND trim(subject) LIKE '{переменная с именем пары}' AND trim(type) LIKE '{переменная с типом пары}' ORDER BY full_name ASC')
+    #         res = self.__cur.fetchone()
+    #         return res
+    #     except sqlite3.Error as e:
+    #         print("Ошибка получения данных из БД " + str(e))
+    #     return False
+
+    def getStudentsList(self):
+        sql = "SELECT * FROM students_name"
         try:
-            self .__cur.execute(f"SELECT * FROM users WHERE id = '{user}' LIMIT 1")
-            res = self.__cur.fetchone()
-            return res
+            self.__cur.execute(sql)
+            res = self.__cur.fetchall()
+            if res: return res
         except sqlite3.Error as e:
-            print("Ошибка получения данных из БД " + str(e))
+            print("Ошибка получения данных из БД "+str(e))
         return False
 ############################################################
 

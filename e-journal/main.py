@@ -121,9 +121,11 @@ def attend():
     user = current_user.get_id()
     role = dbase.getUserRole(user)
     if role == 'teacher':
-        return render_template("attend.html", menu=dbase.getMenu(), attend=dbase.getAttend(user), role=role, title="Посещаемость")
+        # if request.method == "POST":
+
+        return render_template("attend.html", menu=dbase.getMenu(), attend=dbase.getAttend(user), group=dbase.getGroupList(), role=role, title="Посещаемость")
     elif role == 'moderator':
-        return render_template("attend.html", menu=dbase.getMenu(), attend=dbase.getAttend(user), role=role, title="Посещаемость")
+        return render_template("attend.html", menu=dbase.getMenu(), attend=dbase.getAttend(user), group=dbase.getGroupList(), role=role, title="Посещаемость")
     return page_not_found()
 
 @app.route("/schedule_global", methods=["POST", "GET"])
@@ -180,14 +182,13 @@ def schedule_global_redactor():
             try:
                 res = request.form['group_r'], request.form['number']
                 if res:
-
                     i = int(request.form['number'])
                     number = list(range(1, i+1))
                     print(number)
                     number = list(map(str, number))
                     print(number)
                     schedule_group = request.form['group_r']
-                    return render_template("schedule_global_redactor.html", role = role,  menu=dbase.getMenu(), group=dbase.getGroupList(), name =dbase.getNameGlobalList(schedule_group), teacher = dbase.getTeacherGlobalList(schedule_group), aud=dbase.getAudList(), number=number, schedule_group = schedule_group, title="Редактирование расписания")
+                    return render_template("schedule_global_redactor.html", role=role,  menu=dbase.getMenu(), group=dbase.getGroupList(), name =dbase.getNameGlobalList(schedule_group), teacher = dbase.getTeacherGlobalList(schedule_group), aud=dbase.getAudList(), number=number, schedule_group = schedule_group, title="Редактирование расписания")
             except: print('1')
             try:
                 schedule_group = (request.form.getlist('schedule_group'))
