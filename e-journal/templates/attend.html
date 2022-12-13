@@ -1,0 +1,34 @@
+{% include 'base.html' %}
+{% if role %}
+
+<section class="class">
+    <div class="class-table">
+        <h3 class="class-h2 class-menu-h3"> Журнал посещаемости </h3>
+        {% if role == 'teacher' %}
+        <table cellspacing="0">
+            <tr>
+                <th>ФИО</th>
+                {% for a in attend %}
+                <th>{{a.date}}</th>
+                {% endfor %}
+                <td>Отметка об отработках</td>
+            </tr>
+            {% for a in attend %}
+            <tr>
+                <td>{{a.full_name}}</td>
+                {% for b in attend %}
+                <th>{{b.presence}}</th>
+                {% endfor %}
+                <td></td>
+            </tr>{% endfor %}
+        </table>
+
+        
+        {% elif role == 'moderator'%}
+        <table cellspacing="0">
+
+        </table>
+        {% endif %}
+    </div>
+</section>
+{% endif %}

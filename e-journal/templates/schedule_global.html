@@ -1,18 +1,16 @@
 {% include 'base.html' %}
 
 {% block content %}
-<form action="/schedule_global" method="post" name="list">
-	<p><select name="group">
-		<option>Выберите из списка</option>
-		{% for g in group -%}
-		<option value="{{ g.id }}">{{ g.schedule_group_text }}</option>
-		{% endfor -%}
-	</select></p>
-	<p><input type="submit" value="Отправить"></p>
-</form>
+	<form action="/schedule_global" method="post" name="list">
+		<p><select name="group">
+			<option>Выберите из списка</option>
+			{% for g in group -%}
+				<option value="{{ g.id }}">{{ g.schedule_group_text }}</option>
+			{% endfor -%}
+		</select></p>
+		<p><input type="submit" value="Отправить"></p>
+	</form>
 {% endblock %}
-
-
 
 <script>
 function myFunction() {
@@ -39,8 +37,6 @@ function myFunction() {
   });
 }
 </script>
-
-
 
 <body onload="myFunction()">
 	<table class="iksweb", border="1">

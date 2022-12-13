@@ -1,15 +1,15 @@
 {% include 'base.html' %}
 
 {% block content %}
-<form action="/schedule_aud" method="post" name="list">
-	<p><select name="aud">
-		<option>Выберите из списка</option>
-		{% for a in aud -%}
-		<option value="{{ a.id }}">{{ a.schedule_aud_text }}</option>
-		{% endfor -%}
-	</select></p>
-	<p><input type="submit" value="Отправить"></p>
-</form>
+	<form action="/schedule_aud" method="post" name="list">
+		<p><select name="aud">
+			<option>Выберите из списка</option>
+			{% for a in aud -%}
+				<option value="{{ a.id }}">{{ a.schedule_aud_text }}</option>
+			{% endfor -%}
+		</select></p>
+		<p><input type="submit" value="Отправить"></p>
+	</form>
 {% endblock %}
 
 
@@ -20,7 +20,7 @@ function myFunction() {
   const colsChanged = {};
   let dark = false;
 
-  Array.from(document.querySelectorAll('tbody tr')).forEach((tr, rowIdx) => {
+	Array.from(document.querySelectorAll('tbody tr')).forEach((tr, rowIdx) => {
     Array.from(tr.children).forEach((td, colIdx) => {
       if (rowIdx > 0 && previousRow[colIdx].text === td.innerText) {
         previousRow[colIdx].elem.setAttribute('rowspan', ++previousRow[colIdx].span);
@@ -39,8 +39,6 @@ function myFunction() {
   });
 }
 </script>
-
-
 
 <body onload="myFunction()">
 	<table class="iksweb", border="1">
