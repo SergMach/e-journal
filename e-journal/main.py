@@ -43,8 +43,6 @@ def get_db():
         g.link_db = connect_db()
     return g.link_db
 
-
-
 @app.teardown_appcontext
 def close_db(error):
     if hasattr(g, 'link_db'):
