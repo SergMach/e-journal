@@ -144,13 +144,23 @@ class DataBase:
             return []
 
 ####################################################
-    def getAttend(self, user):
+    def getAttend(self, group, teacher, subj):
         try:
-            self .__cur.execute(f"SELECT * FROM users WHERE id = '{user}' LIMIT 1")
+            self .__cur.execute(f"SELECT attend_list.attend_list_id, students_name.students_name_text AS full_name_list, schedule_group.schedule_group_text AS group_list, schedule_name.schedule_name_text AS subject_list, schedule_teacher.schedule_teacher_text AS teacher_list, schedule_name.schedule_name_text_type AS type_list FROM attend_list JOIN schedule_group ON attend_list.group_list = schedule_group.id JOIN schedule_name ON attend_list.subject_list = schedule_name.id JOIN students_name ON attend_list.full_name_list = students_name.id  JOIN schedule_teacher ON attend_list.teacher_list = schedule_teacher.id  WHERE trim(teacher_list) LIKE '{teacher}' AND trim(group_list) LIKE '{group}' AND trim(subject_list) LIKE '{subj}' ORDER BY full_name_list ASC")
             res = self.__cur.fetchone()
             return res
         except sqlite3.Error as e:
             print("Ошибка получения данных из БД " + str(e))
+        return False
+
+    def getStudentsList(self):
+        sql = "SELECT * FROM students_name"
+        try:
+            self.__cur.execute(sql)
+            res = self.__cur.fetchall()
+            if res: return res
+        except sqlite3.Error as e:
+            print("Ошибка получения данных из БД "+str(e))
         return False
 ############################################################
 
@@ -176,7 +186,6 @@ class DataBase:
             print("Ошибка получения данных из БД " + str(e))
         return False
 
-
     def addScheduleBlock(self, schedule_group, name, day, place, time, teacher, aud):
         try:
             self.__cur.execute(f"SELECT COUNT() as count FROM schedule WHERE schedule_time_id LIKE '{time}' AND schedule_day_id LIKE '{day}' AND schedule_group_id LIKE '{schedule_group}' AND schedule_place_id LIKE '{place}'")
@@ -194,7 +203,6 @@ class DataBase:
             print("Ошибка добавления  в БД "+str(e))
             return False
         return True
-
 
     def deleteScheduleBlock(self, schedule_group_delete, day_delete, place_delete, time_delete):
         try:
