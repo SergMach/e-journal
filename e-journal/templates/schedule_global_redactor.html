@@ -1,19 +1,17 @@
 {% include 'base.html' %}
 
 {% block content %}
-<form action="/schedule_global_redactor" method="post" name="list">
-	<p><select name="group_r">
-		<option>Выберите из списка</option>
-		{% for g in group -%}
-		<option value="{{ g.id }}">{{ g.schedule_group_text }}</option>
-		{% endfor -%}
-	</select></p>
-	<p><label>Число пар: </label> <input type="text" name="number" value="" requied />
-	<p><input type="submit" value="Отправить"></p>
-</form>
-
+	<form action="/schedule_global_redactor" method="post" name="list">
+		<p><select name="group_r">
+			<option>Выберите из списка</option>
+			{% for g in group -%}
+				<option value="{{ g.id }}">{{ g.schedule_group_text }}</option>
+			{% endfor -%}
+		</select></p>
+		<p><label>Число пар: </label> <input type="text" name="number" value="" requied />
+		<p><input type="submit" value="Отправить"></p>
+	</form>
 {% endblock %}
-
 
 <table class="iksweb", border="1">
 	<tbody>

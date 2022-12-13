@@ -1,18 +1,16 @@
 {% include 'base.html' %}
 
 {% block content %}
-<form action="/schedule_redactor" method="post" name="list">
-	<p><select name="group">
-		<option>Выберите из списка</option>
-		{% for g in group -%}
-		<option value="{{ g.id }}">{{ g.schedule_group_text }}</option>
-		{% endfor -%}
-	</select></p>
-	<p><input type="submit" value="Отправить"></p>
-</form>
+	<form action="/schedule_redactor" method="post" name="list">
+		<p><select name="group">
+			<option>Выберите из списка</option>
+			{% for g in group -%}
+				<option value="{{ g.id }}">{{ g.schedule_group_text }}</option>
+			{% endfor -%}
+		</select></p>
+		<p><input type="submit" value="Отправить"></p>
+	</form>
 {% endblock %}
-
-
 
 <script>
 function myFunction() {
@@ -40,8 +38,6 @@ function myFunction() {
 }
 </script>
 
-
-
 <body onload="myFunction()">
 	<table class="iksweb", border="1">
 		<tbody>
@@ -67,75 +63,75 @@ function myFunction() {
 		<tr>
 			<td>
 				<p>Добавить предмет</p>
-<form action="/schedule_redactor" method="post" class="form-contact">
-	<p><select name="schedule_group">
-		<option>Выберите группу</option>
-		{% for g in group -%}
-		<option value="{{ g.id }}">{{ g.schedule_group_text }}</option>
-		{% endfor -%}
-	</select></p>
-		<p><select name="name">
-		<option>Выберите предмет</option>
-		{% for n in name -%}
-		<option value="{{ n.id }}">{{ n.list_name }} {{ n.list_type }}</option>
-		{% endfor -%}
-	</select></p>
-		<p><select name="day">
-		<option>Выберите день недели</option>
-		<option value="1">Понедельник</option>
-		<option value="2">Вторник</option>
-	</select></p>
-		<p><select name="place">
-		<option>Выберите неделю</option>
-		<option value="1">Верхняя</option>
-		<option value="2">Нижняя</option>
-	</select></p>
-		<p><select name="time">
-		<option>Выберите время</option>
-		<option value="1">900</option>
-		<option value="2">10:40</option>
-	</select></p>
-		<p><select name="teacher">
-		<option>Выберите преподователя</option>
-		{% for t in teacher -%}
-		<option value="{{ t.id }}">{{ t.schedule_teacher_text }}</option>
-		{% endfor -%}
-	</select></p>
-		<p><select name="aud">
-		<option>Выберите аудиторию</option>
-		{% for a in aud -%}
-		<option value="{{ a.id }}">{{ a.schedule_aud_text }}</option>
-		{% endfor -%}
-	</select></p>
-<p><input type="submit" value="Добавить" />
-</form>
+				<form action="/schedule_redactor" method="post" class="form-contact">
+					<p><select name="schedule_group">
+						<option>Выберите группу</option>
+						{% for g in group -%}
+						<option value="{{ g.id }}">{{ g.schedule_group_text }}</option>
+						{% endfor -%}
+					</select></p>
+						<p><select name="name">
+						<option>Выберите предмет</option>
+						{% for n in name -%}
+						<option value="{{ n.id }}">{{ n.list_name }} {{ n.list_type }}</option>
+						{% endfor -%}
+					</select></p>
+						<p><select name="day">
+						<option>Выберите день недели</option>
+						<option value="1">Понедельник</option>
+						<option value="2">Вторник</option>
+					</select></p>
+						<p><select name="place">
+						<option>Выберите неделю</option>
+						<option value="1">Верхняя</option>
+						<option value="2">Нижняя</option>
+					</select></p>
+						<p><select name="time">
+						<option>Выберите время</option>
+						<option value="1">900</option>
+						<option value="2">10:40</option>
+					</select></p>
+						<p><select name="teacher">
+						<option>Выберите преподователя</option>
+						{% for t in teacher -%}
+						<option value="{{ t.id }}">{{ t.schedule_teacher_text }}</option>
+						{% endfor -%}
+					</select></p>
+						<p><select name="aud">
+						<option>Выберите аудиторию</option>
+						{% for a in aud -%}
+						<option value="{{ a.id }}">{{ a.schedule_aud_text }}</option>
+						{% endfor -%}
+					</select></p>
+				<p><input type="submit" value="Добавить" />
+				</form>
 			</td>
 			<td>
 				<p>Удалить предмет</p>
-<form action="/schedule_redactor" method="post" class="form-contact">
-	<p><select name="schedule_group_delete">
-		<option>Выберите группу</option>
-		{% for g in group -%}
-		<option value="{{ g.id }}">{{ g.schedule_group_text }}</option>
-		{% endfor -%}
-	</select></p>
-		<p><select name="day_delete">
-		<option>Выберите день недели</option>
-		<option value="1">Понедельник</option>
-		<option value="2">Вторник</option>
-	</select></p>
-		<p><select name="place_delete">
-		<option>Выберите неделю</option>
-		<option value="1">Верхняя</option>
-		<option value="2">Нижняя</option>
-	</select></p>
-		<p><select name="time_delete">
-		<option>Выберите время</option>
-		<option value="1">900</option>
-		<option value="2">1040</option>
-	</select></p>
-<p><input type="submit" value="Удалить" />
-</form>
+				<form action="/schedule_redactor" method="post" class="form-contact">
+					<p><select name="schedule_group_delete">
+						<option>Выберите группу</option>
+						{% for g in group -%}
+						<option value="{{ g.id }}">{{ g.schedule_group_text }}</option>
+						{% endfor -%}
+					</select></p>
+						<p><select name="day_delete">
+						<option>Выберите день недели</option>
+						<option value="1">Понедельник</option>
+						<option value="2">Вторник</option>
+					</select></p>
+						<p><select name="place_delete">
+						<option>Выберите неделю</option>
+						<option value="1">Верхняя</option>
+						<option value="2">Нижняя</option>
+					</select></p>
+						<p><select name="time_delete">
+						<option>Выберите время</option>
+						<option value="1">900</option>
+						<option value="2">1040</option>
+					</select></p>
+					<p><input type="submit" value="Удалить" />
+				</form>
 			</td>
 		</tr>
 	</tbody>

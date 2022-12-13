@@ -12,35 +12,31 @@
 </form>
 {% endblock %}
 
-
-
 <script>
 function myFunction() {
-  const previousRow = {};
-  const colsChanged = {};
-  let dark = false;
+	const previousRow = {};
+    const colsChanged = {};
+    let dark = false;
 
-  Array.from(document.querySelectorAll('tbody tr')).forEach((tr, rowIdx) => {
+    Array.from(document.querySelectorAll('tbody tr')).forEach((tr, rowIdx) => {
     Array.from(tr.children).forEach((td, colIdx) => {
-      if (rowIdx > 0 && previousRow[colIdx].text === td.innerText) {
+    if (rowIdx > 0 && previousRow[colIdx].text === td.innerText) {
         previousRow[colIdx].elem.setAttribute('rowspan', ++previousRow[colIdx].span);
         colsChanged[colIdx] = false;
         td.remove();
-      } else {
+    } else {
         previousRow[colIdx] = { span: 1, text: td.innerText, elem: td, dark };
         colsChanged[colIdx] = true;
-      }
+    }
     });
     const rowChanged = Object.values(colsChanged).every(Boolean);
     dark = rowChanged && rowIdx > 0 ? !dark : dark;
     if (dark) {
-      tr.classList.add('dark');
+    	tr.classList.add('dark');
     }
-  });
+	});
 }
 </script>
-
-
 
 <body onload="myFunction()">
 	<table class="iksweb", border="1">
