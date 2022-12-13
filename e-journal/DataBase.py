@@ -75,7 +75,7 @@ class DataBase:
             self.__cur.execute("INSERT INTO users VALUES(NULL, ?, ?, ?, ?, ?, ?)", (name, role, group_name, email, hpsw, code))
             self.__db.commit()
         except sqlite3.Error as e:
-            print("Ошибка добавления пользователя в БД " + str(e))
+            print("Ошибка добавления пользователя в БД "+str(e))
             return False
 
         return True
@@ -142,6 +142,7 @@ class DataBase:
             except:
                 print("Ошибка чтения из БД")
             return []
+
 ####################################################
     def getAttend(self, user):
         try:
@@ -161,13 +162,14 @@ class DataBase:
             print("Ошибка получения данных из БД " + str(e))
         return False
 ############################################################
+
     def getUserInfo(self, user):
         try:
             self .__cur.execute(f"SELECT * FROM users WHERE id = '{user}' LIMIT 1")
             res = self.__cur.fetchone()
             return res
         except sqlite3.Error as e:
-            print("Ошибка получения данных из БД " + str(e))
+            print("Ошибка получения данных из БД "+str(e))
         return False
 
     def getUserByEmail(self, email):
@@ -247,3 +249,24 @@ class DataBase:
             except:
                 print("Ошибка чтения из БД")
             return []
+
+    def getTeacherGlobalList(self, group_active):
+        sql = f"SELECT DISTINCT list_teacher AS id, schedule_teacher.schedule_teacher_text AS list_teacher FROM schedule_redactor_list JOIN schedule_teacher ON schedule_redactor_list.list_teacher = schedule_teacher.id WHERE trim(list_group) LIKE '{group_active}' ORDER BY id ASC"
+        try:
+            self.__cur.execute(sql)
+            res = self.__cur.fetchall()
+            if res: return res
+        except sqlite3.Error as e:
+            print("Ошибка получения данных из БД "+str(e))
+        return False
+
+    def getNameGlobalList(self, group_active):
+        print(group_active)
+        sql = f"SELECT DISTINCT list_name AS id, schedule_name.schedule_name_text AS list_name, schedule_name.schedule_name_text_type AS list_type FROM schedule_redactor_list JOIN schedule_name ON schedule_redactor_list.list_name = schedule_name.id WHERE trim(list_group) LIKE '{group_active}' ORDER BY id ASC"
+        try:
+            self.__cur.execute(sql)
+            res = self.__cur.fetchall()
+            if res: return res
+        except sqlite3.Error as e:
+            print("Ошибка получения данных из БД "+str(e))
+        return False
