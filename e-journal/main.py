@@ -121,9 +121,9 @@ def attend():
     user = current_user.get_id()
     role = dbase.getUserRole(user)
     if role == 'teacher':
-        return render_template("attend.html", menu=dbase.getMenu(), attend=dbase.getAttend(user), subject=dbase.getSubject(user), role=role, title="Посещаемость")
+        return render_template("attend.html", menu=dbase.getMenu(), attend=dbase.getAttend(user), role=role, title="Посещаемость")
     elif role == 'moderator':
-        return render_template("attend.html", menu=dbase.getMenu(), attend=dbase.getAttend(user), subject=dbase.getSubject(user), role=role, title="Посещаемость")
+        return render_template("attend.html", menu=dbase.getMenu(), attend=dbase.getAttend(user), role=role, title="Посещаемость")
     return page_not_found()
 
 @app.route("/schedule_global", methods=["POST", "GET"])
