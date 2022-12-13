@@ -28,7 +28,7 @@
 	</form>
 {% endblock %}
 
-        <!-- <table cellspacing="0">
+        <table cellspacing="0">
             <tr>
                 <th>ФИО</th>
                 {% for a in attend %}
@@ -36,14 +36,15 @@
                 {% endfor %}
                 <td>Отметка об отработках</td>
             </tr>
-            {% for a in attend %}
+            {% for b in attend %}
             <tr>
-                <td>{{a.full_name}}</td>
-                {% for b in attend %}
-                <th>{{b.presence}}</th>
+                <td>{{b.full_name}}</td>
+                {% for c in attend %}
+                <th>{{c.presence}}</th>
                 {% endfor %}
                 <td></td>
-            </tr>{% endfor %}
-        </table> -->
+            </tr>
+            {% endfor %}
+        </table>
     </div>
 </section>

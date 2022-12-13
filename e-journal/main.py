@@ -128,10 +128,10 @@ def attend():
                     group = request.form['group']
                     teacher = request.form['teacher']
                     subj = request.form['subj']
-                    return render_template("attend.html", menu=dbase.getMenu(), attend=dbase.getAttend(user), role=role, group=group, teacher=teacher, subj=subj, list_group=dbase.getGroupList(),  list_teacher=dbase.getTeacherList(), list_subj=dbase.getNameGlobalList(group), title="Посещаемость")
+                    return render_template("attend.html", menu=dbase.getMenu(), attend=dbase.getAttend(group, teacher, subj), role=role, group=group, teacher=teacher, subj=subj, list_group=dbase.getGroupList(),  list_teacher=dbase.getTeacherList(), list_subj=dbase.getNameGlobalList(group), title="Посещаемость")
         except: print('1')
         #try:
-    return render_template("attend.html", menu=dbase.getMenu(), group=dbase.getGroupList(),  role=role, teacher=dbase.getTeacherList(), subj=dbase.getNameList(), title="Посещаемость")
+    return render_template("attend.html", menu=dbase.getMenu(), group=dbase.getGroupList(), role=role, teacher=dbase.getTeacherList(), subj=dbase.getNameList(), title="Посещаемость")
     # elif role == 'moderator':attend=dbase.getAttend(user, dbase.getTeacherList(), dbase.getNameList()),
     #     return render_template("attend.html", menu=dbase.getMenu(), attend=dbase.getAttend(user), teacher=dbase.getTeacherList(), group=dbase.getGroupList(), role=role, title="Посещаемость")
     #return page_not_found()
