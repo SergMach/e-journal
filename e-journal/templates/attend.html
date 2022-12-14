@@ -12,18 +12,21 @@
 				<option value="{{ g.id }}">{{ g.schedule_group_text }}</option>
 			{% endfor -%}
 		</select></p>
-        <p><select name="teacher">
-            <option>Выберите преподавателя</option>
+
             {% for t in teacher -%}
-                <option value="{{ t.id }}">{{ t.schedule_teacher_text }}</option>
+                {% if t==user %}
+                    <p>Преподаватель: {{ t.schedule_teacher_text }}</p>
+                {% endif %}
             {% endfor -%}
-        </select></p>
-        <p><select name="subj">
-            <option></option>
-            {% for n in subj -%}
-            <option value="{{ n.id }}">{{ n.schedule_name_text }} {{ n.schedule_name_text_type }}</option>
-            {% endfor -%}
-        </select></p>
+
+            <p><select name="subj">
+                <option>Выберите дисциплину</option>
+                {% for n in subj -%}
+                    <!-- если совпадает user и teacher id предмета в таблице attend list -->
+                    <option value="{{ n.id }}">{{ n.schedule_name_text }} {{ n.schedule_name_text_type }}</option>
+                {% endfor -%}
+            </select></p>
+
 		<p><input type="submit" value="Отправить"></p>
 	</form>
 {% endblock %}

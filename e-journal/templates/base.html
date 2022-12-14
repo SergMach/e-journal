@@ -20,8 +20,8 @@
                 {% endif %}
 
                 {% if role == 'teacher' %}
-                    <!--<li><a href="schedule">Быстрое расписание</a></li>-->
-                    <li><a href="attend">Посещаемость</a></li>
+                    <li><a href="schedule">Быстрое расписание</a></li>
+                    <!--<li><a href="attend">Посещаемость</a></li>-->
                     <li><a href="profile">Личный кабинет</a></li>
                     <li><a href="logout">Выход</a></li>
                 {% endif %}
@@ -34,7 +34,7 @@
 
                 {% if role == 'moderator' %}
                     <li><a href="schedule_redactor">Редактирование расписания</a></li>
-                    <li><a href="attend">Полная посещаемость</a></li>
+                    <li><a href="schedule_global_redactor">Добавление пар</a></li>
                     <li><a href="profile">Личный кабинет</a></li>
                     <li><a href="logout">Выход</a></li>
                 {% endif %}
