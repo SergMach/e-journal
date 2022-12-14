@@ -162,6 +162,25 @@ class DataBase:
         except sqlite3.Error as e:
             print("Ошибка получения данных из БД "+str(e))
         return False
+
+    def addAttendList(self):
+        try:
+            self .__cur.execute("SELECT * FROM attend_list")
+            res = self.__cur.fetchone()
+            return res
+        except sqlite3.Error as e:
+            print("Ошибка получения данных из БД " + str(e))
+        return False
+
+
+    def getMyTeacher(self, user):
+        try:
+            self .__cur.execute(f"SELECT * FROM schedule_teacher WHERE id = '{user}' LIMIT 1")
+            res = self.__cur.fetchone()
+            return res
+        except sqlite3.Error as e:
+            print("Ошибка получения данных из БД "+str(e))
+        return False
 ############################################################
 
     def getUserInfo(self, user):
