@@ -115,34 +115,36 @@ def schedule():
     role = dbase.getUserRole(user)
     return render_template("schedule.html", menu=dbase.getMenu(), schedule=dbase.getSchedule(user), role=role, title="Быстрое расписание")
 
-##################################################################
-@app.route("/attend", methods=["POST", "GET"])
-@login_required
-def attend():
-    user = current_user.get_id()
-    role = dbase.getUserRole(user)
-    if role == "teacher":
-        teacher_id = dbase.getMyTeacher(user)
-        menu = dbase.getMenu()
-        group = dbase.getGroupList()
-        teacher = dbase.getTeacherList()
-        subj = dbase.getNameList()
-        attend_list = dbase.getAttendList()
-        try:
-            if request.form['group'] and request.form['teacher'] and request.form['subj'] and request.method == 'POST':
-                curr_group = int(request.form['group'])
-                curr_teacher = int(request.form['teacher'])
-                curr_subj = int(request.form['subj'])
-        except:
-            print('1')
-        return render_template("attend.html", attend_list=attend_list, user=teacher_id, menu=menu, group=group, role=role, teacher=teacher, subj=subj, title="Посещаемость")
-
-
-
-    # elif role == 'moderator':attend=dbase.getAttend(user, dbase.getTeacherList(), dbase.getNameList()),
-    #     return render_template("attend.html", menu=dbase.getMenu(), attend=dbase.getAttend(user), teacher=dbase.getTeacherList(), group=dbase.getGroupList(), role=role, title="Посещаемость")
-    return page_not_found()
-#####################################################################
+# ##################################################################
+# @app.route("/attend", methods=["POST", "GET"])
+# @login_required
+# def attend():
+#     user = current_user.get_id()
+#     role = dbase.getUserRole(user)
+#     if role == "teacher":
+#         teacher_id = dbase.getMyTeacher(user)
+#         menu = dbase.getMenu()
+#         group = dbase.getGroupList()
+#         teacher = dbase.getTeacherList()
+#         subj = dbase.getNameList()
+#         # attend_list = dbase.getAttendList()
+#         # for i in attend_list:
+#         #     print(i.full_name_list, i.group_list, i.teacher_list, i.subject_list, i.type_list)
+#         #     print('new')
+#         try:
+#             if request.form['group'] and request.form['teacher'] and request.form['subj'] and request.method == 'POST':
+#                 curr_group = int(request.form['group'])
+#                 curr_teacher = int(request.form['teacher'])
+#                 curr_subj = int(request.form['subj'])
+#                 return render_template("attend.html", user=teacher_id, menu=menu, group=group, role=role, teacher=teacher, subj=subj, curr_group=curr_group, curr_teacher=curr_teacher, curr_subj=curr_subj, title="Посещаемость")
+#         except:
+#             print('1')
+#         return render_template("attend.html", user=teacher_id, menu=menu, group=group, role=role, teacher=teacher, subj=subj, title="Посещаемость")
+#     else:
+#         # elif role == 'moderator':attend=dbase.getAttend(user, dbase.getTeacherList(), dbase.getNameList()),
+#         #     return render_template("attend.html", menu=dbase.getMenu(), attend=dbase.getAttend(user), teacher=dbase.getTeacherList(), group=dbase.getGroupList(), role=role, title="Посещаемость")
+#         return page_not_found()
+# #####################################################################
 
 @app.route("/schedule_global", methods=["POST", "GET"])
 def schedule_global():

@@ -19,13 +19,14 @@
                 {% endif %}
             {% endfor -%}
 
-        <p><select name="subj">
-            <option>Выберите дисциплину</option>
-            {% for n in subj -%}
-                <!-- если совпадает user и teacher id предмета в таблице attend list -->
-                <option value="{{ n.id }}">{{ n.schedule_name_text }} {{ n.schedule_name_text_type }}</option>
-            {% endfor -%}
-        </select></p>
+            <p><select name="subj">
+                <option>Выберите дисциплину</option>
+                {% for n in subj -%}
+                    <!-- если совпадает user и teacher id предмета в таблице attend list -->
+                    <option value="{{ n.id }}">{{ n.schedule_name_text }} {{ n.schedule_name_text_type }}</option>
+                {% endfor -%}
+            </select></p>
+
 		<p><input type="submit" value="Отправить"></p>
 	</form>
 {% endblock %}
