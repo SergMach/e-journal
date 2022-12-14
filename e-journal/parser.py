@@ -61,9 +61,3 @@ def get_schedule(facultet:str, kurs:str, group:str):
         rows = [row.text for row in table.find_all('td')]
         schedule.append(rows)
     return schedule
-
-print(get_facultet())
-print(get_facultet(get_kurs(facultet:str)))
-print(get_group(facultet:str, kurs:str))
-print(get_week())
-print(get_schedule(facultet:str, kurs:str, group:str))
