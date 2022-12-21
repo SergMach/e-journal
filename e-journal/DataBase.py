@@ -26,7 +26,7 @@ class DataBase:
             print(user_group)
             [group], = self.__cur.execute('SELECT id FROM schedule_group WHERE schedule_group_text=?', (user_group,))
             print(group)
-            sql = f"SELECT schedule.id, schedule_aud.schedule_aud_text AS schedule_aud_id, schedule_aud.schedule_aud_text AS schedule_aud_id, schedule_day.schedule_day_text AS schedule_day_id, schedule_group.schedule_group_text AS schedule_group_id, schedule_name.schedule_name_text AS schedule_name_id, schedule_time.schedule_time_text_place AS schedule_number_id, schedule_place.schedule_place_text AS schedule_place_id, schedule_teacher.schedule_teacher_text AS schedule_teacher_id, schedule_time.schedule_time_text AS schedule_time_id, schedule_name.schedule_name_text_type AS schedule_type_id FROM schedule JOIN schedule_day ON schedule.schedule_day_id = schedule_day.id JOIN schedule_group ON schedule.schedule_group_id = schedule_group.id JOIN schedule_name ON schedule.schedule_name_id = schedule_name.id JOIN schedule_place ON schedule.schedule_place_id = schedule_place.id JOIN schedule_teacher ON schedule.schedule_teacher_id = schedule_teacher.id JOIN schedule_time ON schedule.schedule_time_id = schedule_time.id JOIN schedule_aud ON schedule.schedule_aud_id = schedule_aud.id WHERE trim(schedule_group_id) LIKE '{group}' ORDER BY schedule_day_id DESC, schedule_place_id ASC, schedule_number_id ASC"
+            sql = f"SELECT schedule.id, schedule_aud.schedule_aud_text AS schedule_aud_id, schedule_aud.schedule_aud_text AS schedule_aud_id, schedule_day.schedule_day_text AS schedule_day_id, schedule_group.schedule_group_text AS schedule_group_id, schedule_name.schedule_name_text AS schedule_name_id, schedule_time.schedule_time_text_place AS schedule_number_id, schedule_place.schedule_place_text AS schedule_place_id, schedule_teacher.schedule_teacher_text AS schedule_teacher_id, schedule_time.schedule_time_text AS schedule_time_id, schedule_name.schedule_name_text_type AS schedule_type_id FROM schedule JOIN schedule_day ON schedule.schedule_day_id = schedule_day.id JOIN schedule_group ON schedule.schedule_group_id = schedule_group.id JOIN schedule_name ON schedule.schedule_name_id = schedule_name.id JOIN schedule_place ON schedule.schedule_place_id = schedule_place.id JOIN schedule_teacher ON schedule.schedule_teacher_id = schedule_teacher.id JOIN schedule_time ON schedule.schedule_time_id = schedule_time.id JOIN schedule_aud ON schedule.schedule_aud_id = schedule_aud.id WHERE trim(schedule_group_id) LIKE '{group}' ORDER BY filt ASC, schedule_place_id ASC, schedule_number_id ASC"
             try:
                 self.__cur.execute(sql)
                 res = self.__cur.fetchall()
@@ -40,7 +40,7 @@ class DataBase:
             print(user_name)
             [name], = self.__cur.execute('SELECT id FROM schedule_teacher WHERE schedule_teacher_text=?', (user_name,))
             print(name)
-            sql = f"SELECT schedule.id, schedule_aud.schedule_aud_text AS schedule_aud_id, schedule_day.schedule_day_text AS schedule_day_id, schedule_group.schedule_group_text AS schedule_group_id, schedule_name.schedule_name_text AS schedule_name_id, schedule_time.schedule_time_text_place AS schedule_number_id, schedule_place.schedule_place_text AS schedule_place_id, schedule_teacher.schedule_teacher_text AS schedule_teacher_id, schedule_time.schedule_time_text AS schedule_time_id, schedule_name.schedule_name_text_type AS schedule_type_id FROM schedule JOIN schedule_day ON schedule.schedule_day_id = schedule_day.id JOIN schedule_group ON schedule.schedule_group_id = schedule_group.id JOIN schedule_name ON schedule.schedule_name_id = schedule_name.id JOIN schedule_place ON schedule.schedule_place_id = schedule_place.id JOIN schedule_teacher ON schedule.schedule_teacher_id = schedule_teacher.id JOIN schedule_time ON schedule.schedule_time_id = schedule_time.id JOIN schedule_aud ON schedule.schedule_aud_id = schedule_aud.id WHERE trim(schedule_teacher_id) LIKE '{name}' ORDER BY schedule_day_id DESC, schedule_place_id ASC, schedule_number_id ASC"
+            sql = f"SELECT schedule.id, schedule_aud.schedule_aud_text AS schedule_aud_id, schedule_day.schedule_day_text AS schedule_day_id, schedule_group.schedule_group_text AS schedule_group_id, schedule_name.schedule_name_text AS schedule_name_id, schedule_time.schedule_time_text_place AS schedule_number_id, schedule_place.schedule_place_text AS schedule_place_id, schedule_teacher.schedule_teacher_text AS schedule_teacher_id, schedule_time.schedule_time_text AS schedule_time_id, schedule_name.schedule_name_text_type AS schedule_type_id FROM schedule JOIN schedule_day ON schedule.schedule_day_id = schedule_day.id JOIN schedule_group ON schedule.schedule_group_id = schedule_group.id JOIN schedule_name ON schedule.schedule_name_id = schedule_name.id JOIN schedule_place ON schedule.schedule_place_id = schedule_place.id JOIN schedule_teacher ON schedule.schedule_teacher_id = schedule_teacher.id JOIN schedule_time ON schedule.schedule_time_id = schedule_time.id JOIN schedule_aud ON schedule.schedule_aud_id = schedule_aud.id WHERE trim(schedule_teacher_id) LIKE '{name}' ORDER BY filt ASC, schedule_place_id ASC, schedule_number_id ASC"
             try:
                 self.__cur.execute(sql)
                 res = self.__cur.fetchall()
@@ -133,7 +133,7 @@ class DataBase:
         if group == 'Выберите из списка':
             return []
         else:
-            sql = f"SELECT schedule.id, schedule_aud.schedule_aud_text AS schedule_aud_id, schedule_aud.schedule_aud_text AS schedule_aud_id, schedule_day.schedule_day_text AS schedule_day_id, schedule_group.schedule_group_text AS schedule_group_id, schedule_name.schedule_name_text AS schedule_name_id, schedule_time.schedule_time_text_place AS schedule_number_id, schedule_place.schedule_place_text AS schedule_place_id, schedule_teacher.schedule_teacher_text AS schedule_teacher_id, schedule_time.schedule_time_text AS schedule_time_id, schedule_name.schedule_name_text_type AS schedule_type_id FROM schedule JOIN schedule_day ON schedule.schedule_day_id = schedule_day.id JOIN schedule_group ON schedule.schedule_group_id = schedule_group.id JOIN schedule_name ON schedule.schedule_name_id = schedule_name.id JOIN schedule_place ON schedule.schedule_place_id = schedule_place.id JOIN schedule_teacher ON schedule.schedule_teacher_id = schedule_teacher.id JOIN schedule_time ON schedule.schedule_time_id = schedule_time.id JOIN schedule_aud ON schedule.schedule_aud_id = schedule_aud.id WHERE trim(schedule_group_id) LIKE '{group}' ORDER BY schedule_day_id DESC, schedule_place_id ASC, schedule_number_id ASC"
+            sql = f"SELECT schedule.id, schedule_aud.schedule_aud_text AS schedule_aud_id, schedule_aud.schedule_aud_text AS schedule_aud_id, schedule_day.schedule_day_text AS schedule_day_id, schedule_group.schedule_group_text AS schedule_group_id, schedule_name.schedule_name_text AS schedule_name_id, schedule_time.schedule_time_text_place AS schedule_number_id, schedule_place.schedule_place_text AS schedule_place_id, schedule_teacher.schedule_teacher_text AS schedule_teacher_id, schedule_time.schedule_time_text AS schedule_time_id, schedule_name.schedule_name_text_type AS schedule_type_id FROM schedule JOIN schedule_day ON schedule.schedule_day_id = schedule_day.id JOIN schedule_group ON schedule.schedule_group_id = schedule_group.id JOIN schedule_name ON schedule.schedule_name_id = schedule_name.id JOIN schedule_place ON schedule.schedule_place_id = schedule_place.id JOIN schedule_teacher ON schedule.schedule_teacher_id = schedule_teacher.id JOIN schedule_time ON schedule.schedule_time_id = schedule_time.id JOIN schedule_aud ON schedule.schedule_aud_id = schedule_aud.id WHERE trim(schedule_group_id) LIKE '{group}' ORDER BY filt ASC, schedule_place_id ASC, schedule_number_id ASC"
             try:
                 self.__cur.execute(sql)
                 res = self.__cur.fetchall()
@@ -144,43 +144,25 @@ class DataBase:
             return []
 
 ####################################################
-#     def getAttend(self, group, teacher, subj):
-#         try:
-#             self .__cur.execute(f"SELECT attend_list.attend_list_id, students_name.students_name_text AS full_name_list, schedule_group.schedule_group_text AS group_list, schedule_name.schedule_name_text AS subject_list, schedule_teacher.schedule_teacher_text AS teacher_list, schedule_name.schedule_name_text_type AS type_list FROM attend_list JOIN schedule_group ON attend_list.group_list = schedule_group.id JOIN schedule_name ON attend_list.subject_list = schedule_name.id JOIN students_name ON attend_list.full_name_list = students_name.id  JOIN schedule_teacher ON attend_list.teacher_list = schedule_teacher.id  WHERE trim(teacher_list) LIKE {teacher} AND trim(group_list) LIKE {group} AND trim(subject_list) LIKE {subj} ORDER BY full_name_list ASC")
-#             res = self.__cur.fetchone()
-#             return res
-#         except sqlite3.Error as e:
-#             print("Ошибка получения данных из БД " + str(e))
-#         return False
+    def getAttend(self, group, teacher, subj):
+        try:
+            self .__cur.execute(f"SELECT attend_list.attend_list_id, students_name.students_name_text AS full_name_list, schedule_group.schedule_group_text AS group_list, schedule_name.schedule_name_text AS subject_list, schedule_teacher.schedule_teacher_text AS teacher_list, schedule_name.schedule_name_text_type AS type_list FROM attend_list JOIN schedule_group ON attend_list.group_list = schedule_group.id JOIN schedule_name ON attend_list.subject_list = schedule_name.id JOIN students_name ON attend_list.full_name_list = students_name.id  JOIN schedule_teacher ON attend_list.teacher_list = schedule_teacher.id  WHERE trim(teacher_list) LIKE '{teacher}' AND trim(group_list) LIKE '{group}' AND trim(subject_list) LIKE '{subj}' ORDER BY full_name_list ASC")
+            res = self.__cur.fetchone()
+            return res
+        except sqlite3.Error as e:
+            print("Ошибка получения данных из БД " + str(e))
+        return False
 
-#     def getStudentsList(self):
-#         sql = "SELECT * FROM students_name"
-#         try:
-#             self.__cur.execute(sql)
-#             res = self.__cur.fetchall()
-#             if res: return res
-#         except sqlite3.Error as e:
-#             print("Ошибка получения данных из БД "+str(e))
-#         return False
-
-#     # def getAttendList(self):
-#     #     try:
-#     #         self .__cur.execute(f"SELECT * FROM attend_list")
-#     #         res = self.__cur.fetchone()
-#     #         return res
-#     #     except sqlite3.Error as e:
-#     #         print("Ошибка получения данных из БД " + str(e))
-#     #     return False
-
-#     def getMyTeacher(self, user):
-#         try:
-#             self .__cur.execute(f"SELECT * FROM schedule_teacher WHERE id = {user} LIMIT 1")
-#             res = self.__cur.fetchone()
-#             return res
-#         except sqlite3.Error as e:
-#             print("Ошибка получения данных из БД "+str(e))
-#         return False
-# ############################################################
+    def getStudentsList(self):
+        sql = "SELECT * FROM students_name"
+        try:
+            self.__cur.execute(sql)
+            res = self.__cur.fetchall()
+            if res: return res
+        except sqlite3.Error as e:
+            print("Ошибка получения данных из БД "+str(e))
+        return False
+############################################################
 
     def getUserInfo(self, user):
         try:
@@ -214,8 +196,53 @@ class DataBase:
         except sqlite3.Error as e:
             print("Ошибка добавления в БД "+str(e))
             return False
+
         try:
-            self.__cur.execute("INSERT INTO schedule VALUES(NULL, ?, ?, NULL, ?, ?, ?, ?, ?, NULL)", (schedule_group, day, time, teacher, place, name, aud))
+            [type_check], = self.__cur.execute('SELECT schedule_name_text_type FROM schedule_name WHERE id=?', (name,))
+            print (type_check)
+            if type_check == 'Лекция':
+                self.__cur.execute(f"SELECT COUNT() as count FROM schedule WHERE schedule_name_id NOT LIKE '{name}' AND schedule_aud_id NOT LIKE '{aud}' AND schedule_day_id LIKE '{day}' AND schedule_teacher_id LIKE '{teacher}' AND schedule_place_id LIKE '{place}' AND schedule_time_id LIKE '{time}'")
+                res = self.__cur.fetchone()
+                if res['count'] > 0:
+                    print("Преподователь занят")
+                    return False
+            if type_check == 'Практика':
+                self.__cur.execute(f"SELECT COUNT() as count FROM schedule WHERE schedule_day_id LIKE '{day}' AND schedule_teacher_id LIKE '{teacher}' AND schedule_place_id LIKE '{place}' AND schedule_time_id LIKE '{time}'")
+                res = self.__cur.fetchone()
+                if res['count'] > 0:
+                    print("Преподователь занят")
+                    return False
+        except sqlite3.Error as e:
+            print("Ошибка добавления в БД "+str(e))
+            return False
+
+        try:
+            [type_check], = self.__cur.execute('SELECT schedule_name_text_type FROM schedule_name WHERE id=?', (name,))
+            if type_check == 'Практика':
+                self.__cur.execute(f"SELECT COUNT() as count FROM schedule WHERE schedule_day_id LIKE '{day}' AND schedule_aud_id LIKE '{aud}' AND schedule_place_id LIKE '{place}' AND schedule_time_id LIKE '{time}'")
+                res = self.__cur.fetchone()
+                if res['count'] > 0:
+                    print("Аудитория занята")
+                    return False
+
+            if type_check == 'Лекция':
+                self.__cur.execute(f"SELECT COUNT() as count FROM schedule WHERE schedule_teacher_id NOT LIKE '{teacher}' AND schedule_day_id LIKE '{day}' AND schedule_aud_id LIKE '{aud}' AND schedule_place_id LIKE '{place}' AND schedule_time_id LIKE '{time}'")
+                res = self.__cur.fetchone()
+                if res['count'] > 0:
+                    print("Аудитория занята")
+                    return False
+                self.__cur.execute(f"SELECT COUNT() as count FROM schedule WHERE schedule_teacher_id LIKE '{teacher}' AND schedule_day_id LIKE '{day}' AND schedule_aud_id NOT LIKE '{aud}' AND schedule_place_id LIKE '{place}' AND schedule_time_id LIKE '{time}'")
+                res = self.__cur.fetchone()
+                if res['count'] > 0:
+                    print("Лекция и аудитории не совпадают")
+                    return False
+
+        except sqlite3.Error as e:
+            print("Ошибка добавления в БД "+str(e))
+            return False
+
+        try:
+            self.__cur.execute("INSERT INTO schedule VALUES(NULL, ?, ?, NULL, ?, ?, ?, ?, ?, NULL, ?)", (schedule_group, day, time, teacher, place, name, aud, day))
             self.__db.commit()
         except sqlite3.Error as e:
             print("Ошибка добавления  в БД "+str(e))
@@ -243,7 +270,7 @@ class DataBase:
         if teacher == 'Выберите из списка':
             return []
         else:
-            sql = f"SELECT schedule.id, schedule_aud.schedule_aud_text AS schedule_aud_id, schedule_aud.schedule_aud_text AS schedule_aud_id, schedule_day.schedule_day_text AS schedule_day_id, schedule_group.schedule_group_text AS schedule_group_id, schedule_name.schedule_name_text AS schedule_name_id, schedule_time.schedule_time_text_place AS schedule_number_id, schedule_place.schedule_place_text AS schedule_place_id, schedule_teacher.schedule_teacher_text AS schedule_teacher_id, schedule_time.schedule_time_text AS schedule_time_id, schedule_name.schedule_name_text_type AS schedule_type_id FROM schedule JOIN schedule_day ON schedule.schedule_day_id = schedule_day.id JOIN schedule_group ON schedule.schedule_group_id = schedule_group.id JOIN schedule_name ON schedule.schedule_name_id = schedule_name.id JOIN schedule_place ON schedule.schedule_place_id = schedule_place.id JOIN schedule_teacher ON schedule.schedule_teacher_id = schedule_teacher.id JOIN schedule_time ON schedule.schedule_time_id = schedule_time.id JOIN schedule_aud ON schedule.schedule_aud_id = schedule_aud.id WHERE trim(schedule_teacher_id) LIKE '{teacher}' ORDER BY schedule_day_id DESC, schedule_place_id ASC, schedule_number_id ASC"
+            sql = f"SELECT schedule.id, schedule_aud.schedule_aud_text AS schedule_aud_id, schedule_aud.schedule_aud_text AS schedule_aud_id, schedule_day.schedule_day_text AS schedule_day_id, schedule_group.schedule_group_text AS schedule_group_id, schedule_name.schedule_name_text AS schedule_name_id, schedule_time.schedule_time_text_place AS schedule_number_id, schedule_place.schedule_place_text AS schedule_place_id, schedule_teacher.schedule_teacher_text AS schedule_teacher_id, schedule_time.schedule_time_text AS schedule_time_id, schedule_name.schedule_name_text_type AS schedule_type_id FROM schedule JOIN schedule_day ON schedule.schedule_day_id = schedule_day.id JOIN schedule_group ON schedule.schedule_group_id = schedule_group.id JOIN schedule_name ON schedule.schedule_name_id = schedule_name.id JOIN schedule_place ON schedule.schedule_place_id = schedule_place.id JOIN schedule_teacher ON schedule.schedule_teacher_id = schedule_teacher.id JOIN schedule_time ON schedule.schedule_time_id = schedule_time.id JOIN schedule_aud ON schedule.schedule_aud_id = schedule_aud.id WHERE trim(schedule_teacher_id) LIKE '{teacher}' ORDER BY filt ASC, schedule_place_id ASC, schedule_number_id ASC"
             try:
                 self.__cur.execute(sql)
                 res = self.__cur.fetchall()
@@ -257,7 +284,7 @@ class DataBase:
         if aud == 'Выберите из списка':
             return []
         else:
-            sql = f"SELECT schedule.id, schedule_aud.schedule_aud_text AS schedule_aud_id, schedule_aud.schedule_aud_text AS schedule_aud_id, schedule_day.schedule_day_text AS schedule_day_id, schedule_group.schedule_group_text AS schedule_group_id, schedule_name.schedule_name_text AS schedule_name_id, schedule_time.schedule_time_text_place AS schedule_number_id, schedule_place.schedule_place_text AS schedule_place_id, schedule_teacher.schedule_teacher_text AS schedule_teacher_id, schedule_time.schedule_time_text AS schedule_time_id, schedule_name.schedule_name_text_type AS schedule_type_id FROM schedule JOIN schedule_day ON schedule.schedule_day_id = schedule_day.id JOIN schedule_group ON schedule.schedule_group_id = schedule_group.id JOIN schedule_name ON schedule.schedule_name_id = schedule_name.id JOIN schedule_place ON schedule.schedule_place_id = schedule_place.id JOIN schedule_teacher ON schedule.schedule_teacher_id = schedule_teacher.id JOIN schedule_time ON schedule.schedule_time_id = schedule_time.id JOIN schedule_aud ON schedule.schedule_aud_id = schedule_aud.id WHERE trim(schedule_aud_id) LIKE '{aud}' ORDER BY schedule_day_id DESC, schedule_place_id ASC, schedule_number_id ASC"
+            sql = f"SELECT schedule.id, schedule_aud.schedule_aud_text AS schedule_aud_id, schedule_aud.schedule_aud_text AS schedule_aud_id, schedule_day.schedule_day_text AS schedule_day_id, schedule_group.schedule_group_text AS schedule_group_id, schedule_name.schedule_name_text AS schedule_name_id, schedule_time.schedule_time_text_place AS schedule_number_id, schedule_place.schedule_place_text AS schedule_place_id, schedule_teacher.schedule_teacher_text AS schedule_teacher_id, schedule_time.schedule_time_text AS schedule_time_id, schedule_name.schedule_name_text_type AS schedule_type_id FROM schedule JOIN schedule_day ON schedule.schedule_day_id = schedule_day.id JOIN schedule_group ON schedule.schedule_group_id = schedule_group.id JOIN schedule_name ON schedule.schedule_name_id = schedule_name.id JOIN schedule_place ON schedule.schedule_place_id = schedule_place.id JOIN schedule_teacher ON schedule.schedule_teacher_id = schedule_teacher.id JOIN schedule_time ON schedule.schedule_time_id = schedule_time.id JOIN schedule_aud ON schedule.schedule_aud_id = schedule_aud.id WHERE trim(schedule_aud_id) LIKE '{aud}' ORDER BY filt ASC, schedule_place_id ASC, schedule_number_id ASC"
             try:
                 self.__cur.execute(sql)
                 res = self.__cur.fetchall()

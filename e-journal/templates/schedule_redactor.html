@@ -73,13 +73,17 @@ function myFunction() {
 						<p><select name="name">
 						<option>Выберите предмет</option>
 						{% for n in name -%}
-							<option value="{{ n.id }}">{{ n.schedule_name_text }} {{ n.schedule_name_text_type }}
+						<option value="{{ n.id }}">{{ n.schedule_name_text }} {{ n.schedule_name_text_type }}</option>
 						{% endfor -%}
 					</select></p>
 						<p><select name="day">
 						<option>Выберите день недели</option>
 						<option value="1">Понедельник</option>
 						<option value="2">Вторник</option>
+						<option value="3">Среда</option>
+						<option value="4">Четверг</option>
+						<option value="5">Пятница</option>
+						<option value="6">Суббота</option>
 					</select></p>
 						<p><select name="place">
 						<option>Выберите неделю</option>
@@ -88,8 +92,13 @@ function myFunction() {
 					</select></p>
 						<p><select name="time">
 						<option>Выберите время</option>
-						<option value="1">9:00</option>
-						<option value="2">10:40</option>
+						<option value="1">9:00 - 10:30</option>
+						<option value="2">10:40 - 12:10</option>
+						<option value="3">12:50 - 14:20</option>
+						<option value="4">14:30 - 16:00</option>
+						<option value="5">16:10 - 17:40</option>
+						<option value="6">17:50 - 19:20</option>
+						<option value="7">19:30 - 21:00</option>
 					</select></p>
 						<p><select name="teacher">
 						<option>Выберите преподователя</option>
@@ -119,6 +128,10 @@ function myFunction() {
 						<option>Выберите день недели</option>
 						<option value="1">Понедельник</option>
 						<option value="2">Вторник</option>
+						<option value="3">Среда</option>
+						<option value="4">Четверг</option>
+						<option value="5">Пятница</option>
+						<option value="6">Суббота</option>
 					</select></p>
 						<p><select name="place_delete">
 						<option>Выберите неделю</option>
@@ -127,8 +140,13 @@ function myFunction() {
 					</select></p>
 						<p><select name="time_delete">
 						<option>Выберите время</option>
-						<option value="1">900</option>
-						<option value="2">1040</option>
+						<option value="1">9:00 - 10:30</option>
+						<option value="2">10:40 - 12:10</option>
+						<option value="3">12:50 - 14:20</option>
+						<option value="4">14:30 - 16:00</option>
+						<option value="5">16:10 - 17:40</option>
+						<option value="6">17:50 - 19:20</option>
+						<option value="7">19:30 - 21:00</option>
 					</select></p>
 					<p><input type="submit" value="Удалить" />
 				</form>

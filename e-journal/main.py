@@ -1,6 +1,7 @@
 from flask import Flask, render_template,  request, g, redirect, url_for, flash, render_template_string
 from flask_login import LoginManager, login_user, login_required, logout_user, current_user
 from UserLogin import UserLogin
+from flask_ngrok import run_with_ngrok
 
 import sqlite3
 import os
@@ -12,6 +13,8 @@ SECRET_KEY = 'fdgfh78@#5?>gfhf89dx,v06k'
 
 app = Flask(__name__)
 app.config.from_object(__name__)
+
+
 
 app.config.update(dict(DATABASE=os.path.join(app.root_path, 'e_journal.db')))
 
@@ -113,38 +116,31 @@ def register():
 def schedule():
     user = current_user.get_id()
     role = dbase.getUserRole(user)
-    return render_template("schedule.html", menu=dbase.getMenu(), schedule=dbase.getSchedule(user), role=role, title="Быстрое расписание")
+    try:
+        return render_template("schedule.html", menu=dbase.getMenu(), schedule=dbase.getSchedule(user), role=role, title="Быстрое расписание")
+    except: return render_template("profile.html", menu=dbase.getMenu(), role=role, user=dbase.getUserInfo(user), title="Личный кабинет")
 
-# ##################################################################
-# @app.route("/attend", methods=["POST", "GET"])
-# @login_required
-# def attend():
-#     user = current_user.get_id()
-#     role = dbase.getUserRole(user)
-#     if role == "teacher":
-#         teacher_id = dbase.getMyTeacher(user)
-#         menu = dbase.getMenu()
-#         group = dbase.getGroupList()
-#         teacher = dbase.getTeacherList()
-#         subj = dbase.getNameList()
-#         # attend_list = dbase.getAttendList()
-#         # for i in attend_list:
-#         #     print(i.full_name_list, i.group_list, i.teacher_list, i.subject_list, i.type_list)
-#         #     print('new')
-#         try:
-#             if request.form['group'] and request.form['teacher'] and request.form['subj'] and request.method == 'POST':
-#                 curr_group = int(request.form['group'])
-#                 curr_teacher = int(request.form['teacher'])
-#                 curr_subj = int(request.form['subj'])
-#                 return render_template("attend.html", user=teacher_id, menu=menu, group=group, role=role, teacher=teacher, subj=subj, curr_group=curr_group, curr_teacher=curr_teacher, curr_subj=curr_subj, title="Посещаемость")
-#         except:
-#             print('1')
-#         return render_template("attend.html", user=teacher_id, menu=menu, group=group, role=role, teacher=teacher, subj=subj, title="Посещаемость")
-#     else:
-#         # elif role == 'moderator':attend=dbase.getAttend(user, dbase.getTeacherList(), dbase.getNameList()),
-#         #     return render_template("attend.html", menu=dbase.getMenu(), attend=dbase.getAttend(user), teacher=dbase.getTeacherList(), group=dbase.getGroupList(), role=role, title="Посещаемость")
-#         return page_not_found()
-# #####################################################################
+##################################################################
+@app.route("/attend", methods=["POST", "GET"])
+@login_required
+def attend():
+    user = current_user.get_id()
+    role = dbase.getUserRole(user)
+    if request.method == "POST":
+        try:
+            if role == 'teacher':
+                if request.form['group'] and request.form['teacher'] and request.form['subj']:
+                    group = request.form['group']
+                    teacher = request.form['teacher']
+                    subj = request.form['subj']
+                    return render_template("attend.html", menu=dbase.getMenu(), attend=dbase.getAttend(user), role=role, group=group, teacher=teacher, subj=subj, list_group=dbase.getGroupList(),  list_teacher=dbase.getTeacherList(), list_subj=dbase.getNameGlobalList(group), title="Посещаемость")
+        except: print('1')
+        #try:
+    return render_template("attend.html", menu=dbase.getMenu(), group=dbase.getGroupList(),  role=role, teacher=dbase.getTeacherList(), subj=dbase.getNameList(), title="Посещаемость")
+    # elif role == 'moderator':attend=dbase.getAttend(user, dbase.getTeacherList(), dbase.getNameList()),
+    #     return render_template("attend.html", menu=dbase.getMenu(), attend=dbase.getAttend(user), teacher=dbase.getTeacherList(), group=dbase.getGroupList(), role=role, title="Посещаемость")
+    #return page_not_found()
+#####################################################################
 
 @app.route("/schedule_global", methods=["POST", "GET"])
 def schedule_global():
@@ -186,7 +182,7 @@ def schedule_aud():
                 aud = request.form['aud']
                 return render_template("schedule_aud.html", menu=dbase.getMenu(), schedule=dbase.getAudSchedule(aud), role=role, aud=dbase.getAudList(), title="Расписание")
         except: print ('1')
-    return render_template("schedule_aud.html", menu=dbase.getMenu(), role=role, aud=dbase.getAudList(), title="Расписание")
+    return render_template("schedule_aud.html", menu=dbase.getMenu(), role = role, aud=dbase.getAudList(), title="Расписание")
 
 @app.route("/schedule_global_redactor",  methods=["POST", "GET"])
 @login_required
@@ -206,7 +202,7 @@ def schedule_global_redactor():
                     number = list(map(str, number))
                     print(number)
                     schedule_group = request.form['group_r']
-                    return render_template("schedule_global_redactor.html", role=role,  menu=dbase.getMenu(), group=dbase.getGroupList(), name=dbase.getNameGlobalList(schedule_group), teacher=dbase.getTeacherGlobalList(schedule_group), aud=dbase.getAudList(), number=number, schedule_group=schedule_group, title="Редактирование расписания")
+                    return render_template("schedule_global_redactor.html", role=role,  menu=dbase.getMenu(), group=dbase.getGroupList(), name=dbase.getNameGlobalList(schedule_group), teacher = dbase.getTeacherGlobalList(schedule_group), aud=dbase.getAudList(), number=number, schedule_group = schedule_group, title="Редактирование расписания")
             except: print('1')
             try:
                 schedule_group = (request.form.getlist('schedule_group'))

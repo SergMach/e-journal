@@ -12,26 +12,23 @@
 				<option value="{{ g.id }}">{{ g.schedule_group_text }}</option>
 			{% endfor -%}
 		</select></p>
-
+        <p><select name="teacher">
+            <option>Выберите преподавателя</option>
             {% for t in teacher -%}
-                {% if t==user %}
-                    <p>Преподаватель: {{ t.schedule_teacher_text }}</p>
-                {% endif %}
+                <option value="{{ t.id }}">{{ t.schedule_teacher_text }}</option>
             {% endfor -%}
-
-            <p><select name="subj">
-                <option>Выберите дисциплину</option>
-                {% for n in subj -%}
-                    <!-- если совпадает user и teacher id предмета в таблице attend list -->
-                    <option value="{{ n.id }}">{{ n.schedule_name_text }} {{ n.schedule_name_text_type }}</option>
-                {% endfor -%}
-            </select></p>
-
+        </select></p>
+        <p><select name="subj">
+            <option></option>
+            {% for n in subj -%}
+            <option value="{{ n.id }}">{{ n.schedule_name_text }} {{ n.schedule_name_text_type }}</option>
+            {% endfor -%}
+        </select></p>
 		<p><input type="submit" value="Отправить"></p>
 	</form>
 {% endblock %}
 
-        <table cellspacing="0">
+        <!-- <table cellspacing="0">
             <tr>
                 <th>ФИО</th>
                 {% for a in attend %}
@@ -39,15 +36,14 @@
                 {% endfor %}
                 <td>Отметка об отработках</td>
             </tr>
-            {% for b in attend %}
+            {% for a in attend %}
             <tr>
-                <td>{{b.full_name}}</td>
-                {% for c in attend %}
-                <th>{{c.presence}}</th>
+                <td>{{a.full_name}}</td>
+                {% for b in attend %}
+                <th>{{b.presence}}</th>
                 {% endfor %}
                 <td></td>
-            </tr>
-            {% endfor %}
-        </table>
+            </tr>{% endfor %}
+        </table> -->
     </div>
 </section>
