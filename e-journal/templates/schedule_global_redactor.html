@@ -1,5 +1,7 @@
 {% include 'base.html' %}
 
+
+
 {% block content %}
 	<form action="/schedule_global_redactor" method="post" name="list">
 		<p><select name="group_r">
@@ -8,23 +10,160 @@
 				<option value="{{ g.id }}">{{ g.schedule_group_text }}</option>
 			{% endfor -%}
 		</select></p>
-		<p><label>Число пар: </label> <input type="text" name="number" value="" requied />
+		<!--<p><label>Число пар: </label> <input type="text" name="number" value="" requied />-->
 		<p><input type="submit" value="Отправить"></p>
 	</form>
 {% endblock %}
 
-<table class="iksweb", border="1">
-	<tbody>
-		<form action="/schedule_global_redactor" method="post" class="form-contact">
-		{% for i in number -%}
+<script>
+function myFunction() {
+  const previousRow = {};
+  const colsChanged = {};
+  let dark = false;
+
+  Array.from(document.querySelectorAll('tbody tr')).forEach((tr, rowIdx) => {
+    Array.from(tr.children).forEach((td, colIdx) => {
+      if (rowIdx > 0 && previousRow[colIdx].text === td.innerText) {
+        previousRow[colIdx].elem.setAttribute('rowspan', ++previousRow[colIdx].span);
+        colsChanged[colIdx] = false;
+        td.remove();
+      } else {
+        previousRow[colIdx] = { span: 1, text: td.innerText, elem: td, dark };
+        colsChanged[colIdx] = true;
+      }
+    });
+    const rowChanged = Object.values(colsChanged).every(Boolean);
+    dark = rowChanged && rowIdx > 0 ? !dark : dark;
+    if (dark) {
+      tr.classList.add('dark');
+    }
+  });
+}
+</script>
+
+<body>
+	<table class="iksweb", border="1">
+		<tbody>
+		{% for m in schedule -%}
 			<tr>
-				<td>
-					<p><select name="schedule_group">
-						<option value="{{schedule_group}}" selected>Добавьте пары</option>
-					</select></p>
-				</td>
-				<td>
-					<p><select name="day">
+				<td>{{m.schedule_group_id}}</td>
+				<td>{{m.schedule_day_id}}</td>
+				<td>{{m.schedule_place_id}}</td>
+				<td>{{m.schedule_number_id}}</td>
+				<td>{{m.schedule_time_id}}</td>
+				{% if m.p_g %}
+					<td>{{m.p_g}}</td>
+				{% else %}
+					<td></td>
+				{% endif %}
+				<td>{{m.schedule_name_id}}</td>
+				<td>{{m.schedule_type_id}}</td>
+				<td>{{m.schedule_teacher_id}}</td>
+				<td>{{m.schedule_aud_id}}</td>
+			</tr>
+		{% endfor -%}
+		</tbody>
+	</table>
+</body>
+
+
+	<table class="iksweb", border="1">
+		<tbody>
+			<form action="/schedule_global_redactor" method="post" class="form-contact">
+			{% for i in number -%}
+				<tr>
+					<td>
+						<p><select name="schedule_group">
+							<option value="{{schedule_group}}" selected>Добавьте пару</option>
+						</select></p>
+					</td>
+					<td>
+						<p><select name="p_group">
+							<option value="0">Без подгруппы</option>
+							<option value="1">Подгруппа 1</option>
+							<option value="2">Подгруппа 2</option>
+						</select></p>
+					</td>
+					<td>
+						<p><select name="day">
+							<option></option>
+							<option value="1">Понедельник</option>
+							<option value="2">Вторник</option>
+							<option value="3">Среда</option>
+							<option value="4">Четверг</option>
+							<option value="5">Пятница</option>
+							<option value="6">Суббота</option>
+						</select></p>
+					</td>
+					<td>
+						<p><select name="place">
+							<option></option>
+							<option value="1">Верхняя</option>
+							<option value="2">Нижняя</option>
+						</select></p>
+					</td>
+					<td>
+						<p><select name="time">
+							<option></option>
+							<option value="1">9:00 - 10:30</option>
+							<option value="2">10:40 - 12:10</option>
+							<option value="3">12:50 - 14:20</option>
+							<option value="4">14:30 - 16:00</option>
+							<option value="5">16:10 - 17:40</option>
+							<option value="6">17:50 - 19:20</option>
+							<option value="7">19:30 - 21:00</option>
+						</select></p>
+					</td>
+					<td>
+						<p><select name="name", id="jqueryselect">
+							<option></option>
+							{% for n in name -%}
+							<option value="{{ n.id }}, {{n.check_id}}, {{n.list_p_group}}">{{ n.list_name }} {{ n.list_type }}
+								{% if n.list_p_group %}
+									Для подгруппы
+								{% else %}
+
+								{% endif %}
+							</option>
+							{% endfor -%}
+						</select></p>
+					</td>
+					<td>
+						<p><select name="teacher">
+							<option></option>
+							{% for t in teacher -%}
+							<option value="{{ t.id }}">{{ t.list_teacher }}</option>
+							{% endfor -%}
+						</select></p></td>
+					<td>
+						<p><select name="aud">
+							<option></option>
+							{% for a in aud -%}
+							<option value="{{ a.id }}">{{ a.schedule_aud_text }}</option>
+							{% endfor -%}
+						</select></p>
+					</td>
+				</tr>
+			{% endfor -%}
+
+			<tr><p><input type="submit" value="Добавить" /></form></tr>
+		</tbody>
+	</table>
+
+<table class="iksweb">
+	<tbody>
+		<tr>
+			<form action="/schedule_global_redactor" method="post" class="form-contact">
+			{% for i in number -%}
+					<td><p><select name="schedule_group_delete">
+						<option value="{{schedule_group}}" selected>Удалите пару</option>
+					</select></p></td>
+					<td><p><select name="p_group_delete">
+						<option value="0">Без подгруппы</option>
+						<option value="1">Подгруппа 1</option>
+						<option value="2">Подгруппа 2</option>
+					</select></p></td>
+						<td><p><select name="day_delete">
 						<option></option>
 						<option value="1">Понедельник</option>
 						<option value="2">Вторник</option>
@@ -32,17 +171,13 @@
 						<option value="4">Четверг</option>
 						<option value="5">Пятница</option>
 						<option value="6">Суббота</option>
-					</select></p>
-				</td>
-				<td>
-					<p><select name="place">
+					</select></p></td>
+						<td><p><select name="place_delete">
 						<option></option>
 						<option value="1">Верхняя</option>
 						<option value="2">Нижняя</option>
-					</select></p>
-				</td>
-				<td>
-					<p><select name="time">
+					</select></p></td>
+						<td><p><select name="time_delete">
 						<option></option>
 						<option value="1">9:00 - 10:30</option>
 						<option value="2">10:40 - 12:10</option>
@@ -51,34 +186,93 @@
 						<option value="5">16:10 - 17:40</option>
 						<option value="6">17:50 - 19:20</option>
 						<option value="7">19:30 - 21:00</option>
-					</select></p>
-				</td>
-				<td>
-					<p><select name="name">
-						<option></option>
-						{% for n in name -%}
-						<option value="{{ n.id }}">{{ n.list_name }} {{ n.list_type }}</option>
-						{% endfor -%}
-					</select></p>
-				</td>
-				<td>		
-					<p><select name="teacher">
-						<option></option>
-						{% for t in teacher -%}
-						<option value="{{ t.id }}">{{ t.list_teacher }}</option>
-						{% endfor -%}
 					</select></p></td>
-				<td>
-					<p><select name="aud">
-						<option></option>
-						{% for a in aud -%}
-						<option value="{{ a.id }}">{{ a.schedule_aud_text }}</option>
-						{% endfor -%}
-					</select></p>
-				</td>
-			</tr>
-		{% endfor -%}
-
-		<tr><p><input type="submit" value="Добавить" /></form></tr>
+			{% endfor -%}
+					<p><input type="submit" value="Удалить" />
+				</form>
+		</tr>
 	</tbody>
 </table>
+
+	<table class="iksweb", border="1">
+		<tbody>
+			<form action="/schedule_global_redactor" method="post" class="form-contact">
+			{% for i in number -%}
+				<tr>
+					<td>
+						<p><select name="schedule_group_repl">
+							<option value="{{schedule_group}}" selected>Замените пару</option>
+						</select></p>
+					</td>
+					<td>
+						<p><select name="p_group_repl">
+							<option value="0">Без подгруппы</option>
+							<option value="1">Подгруппа 1</option>
+							<option value="2">Подгруппа 2</option>
+						</select></p>
+					</td>
+					<td>
+						<p><select name="day_repl">
+							<option></option>
+							<option value="1">Понедельник</option>
+							<option value="2">Вторник</option>
+							<option value="3">Среда</option>
+							<option value="4">Четверг</option>
+							<option value="5">Пятница</option>
+							<option value="6">Суббота</option>
+						</select></p>
+					</td>
+					<td>
+						<p><select name="place_repl">
+							<option></option>
+							<option value="1">Верхняя</option>
+							<option value="2">Нижняя</option>
+						</select></p>
+					</td>
+					<td>
+						<p><select name="time_repl">
+							<option></option>
+							<option value="1">9:00 - 10:30</option>
+							<option value="2">10:40 - 12:10</option>
+							<option value="3">12:50 - 14:20</option>
+							<option value="4">14:30 - 16:00</option>
+							<option value="5">16:10 - 17:40</option>
+							<option value="6">17:50 - 19:20</option>
+							<option value="7">19:30 - 21:00</option>
+						</select></p>
+					</td>
+					<td>
+						<p><select name="name_repl", id="jqueryselect">
+							<option></option>
+							{% for n in name -%}
+							<option value="{{ n.id }}, {{n.check_id}}, {{n.list_p_group}}">{{ n.list_name }} {{ n.list_type }}
+								{% if n.list_p_group %}
+									Для подгруппы
+								{% else %}
+
+								{% endif %}
+							</option>
+							{% endfor -%}
+						</select></p>
+					</td>
+					<td>
+						<p><select name="teacher_repl">
+							<option></option>
+							{% for t in teacher -%}
+							<option value="{{ t.id }}">{{ t.list_teacher }}</option>
+							{% endfor -%}
+						</select></p></td>
+					<td>
+						<p><select name="aud_repl">
+							<option></option>
+							{% for a in aud -%}
+							<option value="{{ a.id }}">{{ a.schedule_aud_text }}</option>
+							{% endfor -%}
+						</select></p>
+					</td>
+				</tr>
+			{% endfor -%}
+
+			<tr><p><input type="submit" value="Заменить" /></form></tr>
+		</tbody>
+	</table>

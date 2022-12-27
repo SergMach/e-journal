@@ -33,7 +33,7 @@
                 {% endif %}
 
                 {% if role == 'moderator' %}
-                    <li><a href="schedule_redactor">Редактирование расписания</a></li>
+                    <!--<li><a href="schedule_redactor">Редактирование расписания</a></li>-->
                     <li><a href="schedule_global_redactor">Добавление расписания</a></li>
                     <li><a href="profile">Личный кабинет</a></li>
                     <li><a href="logout">Выход</a></li>
@@ -42,5 +42,12 @@
             {% endblock mainmenu -%}
         {% endblock content -%}
     </nav>
+{% with messages = get_flashed_messages() %}
+   {% if messages %}
+      {% for message in messages %}
+         {{ message }}
+      {% endfor %}
+   {% endif %}
+{% endwith %}
 </body>
 </html>

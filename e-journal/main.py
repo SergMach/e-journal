@@ -103,8 +103,8 @@ def register():
         if role: return redirect(url_for('index'))
     except: role = ''
     if request.method == "POST":
-        if len(request.form['name']) > 4 and len(request.form['email']) > 4 \
-            and len(request.form['psw']) > 4 and request.form['psw'] == request.form['psw2']:
+        if len(request.form['name']) > 1 and len(request.form['email']) > 1 \
+            and len(request.form['psw']) > 1 and request.form['psw'] == request.form['psw2']:
             hash = generate_password_hash(request.form['psw'])
             res = dbase.addUser(request.form['name'], request.form['code'], request.form['email'], hash)
             if res:
@@ -191,31 +191,86 @@ def schedule_global_redactor():
     role = dbase.getUserRole(user)
     if role == "moderator":
         global i
+        global schedule_group_check
+        global number
         user = current_user.get_id()
         if request.method == "POST":
             try:
-                res = request.form['group_r'], request.form['number']
+                res = request.form['group_r'], '1'
                 if res:
-                    i = int(request.form['number'])
+                    i = int('1')
                     number = list(range(1, i+1))
                     print(number)
                     number = list(map(str, number))
                     print(number)
                     schedule_group = request.form['group_r']
-                    return render_template("schedule_global_redactor.html", role=role,  menu=dbase.getMenu(), group=dbase.getGroupList(), name=dbase.getNameGlobalList(schedule_group), teacher = dbase.getTeacherGlobalList(schedule_group), aud=dbase.getAudList(), number=number, schedule_group = schedule_group, title="Редактирование расписания")
+                    schedule_group_check = request.form['group_r']
+                    return render_template("schedule_global_redactor.html", role=role,  menu=dbase.getMenu(), group=dbase.getGroupList(), name=dbase.getNameGlobalList(schedule_group), teacher = dbase.getTeacherGlobalList(schedule_group), aud=dbase.getAudList(), number=number, schedule_group=schedule_group, schedule=dbase.getGroupSchedule(schedule_group), title="Редактирование расписания")
             except: print('1')
             try:
                 schedule_group = (request.form.getlist('schedule_group'))
                 name = (request.form.getlist('name'))
+                name1 = []
+                id2 = []
+                check_p_group =[]
+                for i in name:
+                    i = i.split(sep=', ')
+                    name1.append(i[0])
+                    id2.append(i[1])
+                    check_p_group.append(i[2])
+                    print(i)
+                print(name1)
+                print(id2)
+                print(check_p_group)
                 day = (request.form.getlist('day'))
                 place = (request.form.getlist('place'))
+                print(place)
                 time = (request.form.getlist('time'))
                 teacher = (request.form.getlist('teacher'))
                 aud = (request.form.getlist('aud'))
-                for i1, i2, i3, i4, i5, i6, i7 in zip(schedule_group, name, day, place, time, teacher, aud):
-                    res = dbase.addScheduleBlock(i1, i2, i3, i4, i5, i6, i7)
+                p_group = (request.form.getlist('p_group'))
+                for i1, i2, i3, i4, i5, i6, i7, i8, i9, i10 in zip(schedule_group, name1, day, place, time, teacher, aud, id2, p_group, check_p_group):
+                    res = dbase.addScheduleBlock(i1, i2, i3, i4, i5, i6, i7, i8, i9, i10)
                 if res:
-                    return render_template("schedule_global_redactor.html", menu=dbase.getMenu(), role=role, group=dbase.getGroupList(), title="Редактирование расписания")
+                    return render_template("schedule_global_redactor.html", role=role,  menu=dbase.getMenu(), group=dbase.getGroupList(), name=dbase.getNameGlobalList(schedule_group_check), teacher = dbase.getTeacherGlobalList(schedule_group_check), aud=dbase.getAudList(), number=number, schedule_group=schedule_group_check, schedule=dbase.getGroupSchedule(schedule_group_check), title="Редактирование расписания")
+                else: return render_template("schedule_global_redactor.html", role=role,  menu=dbase.getMenu(), group=dbase.getGroupList(), name=dbase.getNameGlobalList(schedule_group_check), teacher = dbase.getTeacherGlobalList(schedule_group_check), aud=dbase.getAudList(), number=number, schedule_group=schedule_group_check, schedule=dbase.getGroupSchedule(schedule_group_check), title="Редактирование расписания")
+            except: print('1')
+
+            try:
+                res = dbase.deleteScheduleBlock(request.form['schedule_group_delete'],  request.form['day_delete'], request.form['place_delete'], request.form['time_delete'], request.form['p_group_delete'])
+                if res:
+                    return render_template("schedule_global_redactor.html", role=role,  menu=dbase.getMenu(), group=dbase.getGroupList(), name=dbase.getNameGlobalList(schedule_group_check), teacher = dbase.getTeacherGlobalList(schedule_group_check), aud=dbase.getAudList(), number=number, schedule_group=schedule_group_check, schedule=dbase.getGroupSchedule(schedule_group_check), title="Редактирование расписания")
+                else: return render_template("schedule_global_redactor.html", role=role,  menu=dbase.getMenu(), group=dbase.getGroupList(), name=dbase.getNameGlobalList(schedule_group_check), teacher = dbase.getTeacherGlobalList(schedule_group_check), aud=dbase.getAudList(), number=number, schedule_group=schedule_group_check, schedule=dbase.getGroupSchedule(schedule_group_check), title="Редактирование расписания")
+            except: print('1')
+
+            try:
+                schedule_group = (request.form.getlist('schedule_group_repl'))
+                name = (request.form.getlist('name_repl'))
+                name1 = []
+                id2 = []
+                check_p_group =[]
+                for i in name:
+                    i = i.split(sep=', ')
+                    name1.append(i[0])
+                    id2.append(i[1])
+                    check_p_group.append(i[2])
+                    print(i)
+                print(name1)
+                print(id2)
+                print(check_p_group)
+                day = (request.form.getlist('day_repl'))
+                place = (request.form.getlist('place_repl'))
+                print(place)
+                time = (request.form.getlist('time_repl'))
+                teacher = (request.form.getlist('teacher_repl'))
+                aud = (request.form.getlist('aud_repl'))
+                p_group = (request.form.getlist('p_group_repl'))
+                for i1, i2, i3, i4, i5, i6, i7, i8, i9, i10 in zip(schedule_group, name1, day, place, time, teacher, aud, id2, p_group, check_p_group):
+                    res = dbase.deleteScheduleBlock(i1, i3, i4, i5, i9)
+                    res = dbase.addScheduleBlock(i1, i2, i3, i4, i5, i6, i7, i8, i9, i10)
+                if res:
+                    return render_template("schedule_global_redactor.html", role=role,  menu=dbase.getMenu(), group=dbase.getGroupList(), name=dbase.getNameGlobalList(schedule_group_check), teacher = dbase.getTeacherGlobalList(schedule_group_check), aud=dbase.getAudList(), number=number, schedule_group=schedule_group_check, schedule=dbase.getGroupSchedule(schedule_group_check), title="Редактирование расписания")
+                else: return render_template("schedule_global_redactor.html", role=role,  menu=dbase.getMenu(), group=dbase.getGroupList(), name=dbase.getNameGlobalList(schedule_group_check), teacher = dbase.getTeacherGlobalList(schedule_group_check), aud=dbase.getAudList(), number=number, schedule_group=schedule_group_check, schedule=dbase.getGroupSchedule(schedule_group_check), title="Редактирование расписания")
             except: print('1')
 
         return render_template("schedule_global_redactor.html", menu=dbase.getMenu(), role=role, group=dbase.getGroupList(), title="Редактирование расписания")
@@ -240,7 +295,7 @@ def schedule_redactor():
                     return render_template("schedule_redactor.html", role=role, schedule=dbase.getGroupSchedule(request.form['schedule_group']),  menu=dbase.getMenu(), group=dbase.getGroupList(), aud=dbase.getAudList(), teacher=dbase.getTeacherList(), name=dbase.getNameList(), title="Редактирование расписания")
             except: print('1')
             try:
-                res = dbase.deleteScheduleBlock(request.form['schedule_group_delete'],  request.form['day_delete'], request.form['place_delete'], request.form['time_delete'])
+                res = dbase.deleteScheduleBlock(request.form['schedule_group_delete'],  request.form['day_delete'], request.form['place_delete'], request.form['time_delete'], request.form['p_group_delete'])
                 if res:
                     return render_template("schedule_redactor.html", role = role, schedule=dbase.getGroupSchedule(request.form['schedule_group_delete']),  menu=dbase.getMenu(), group=dbase.getGroupList(), aud=dbase.getAudList(), teacher=dbase.getTeacherList(), name=dbase.getNameList(), title="Редактирование расписания")
             except: print('1')

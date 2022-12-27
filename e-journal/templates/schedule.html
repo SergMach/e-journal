@@ -35,6 +35,11 @@ function myFunction() {
 				<td>{{m.schedule_place_id}}</td>
 				<td>{{m.schedule_number_id}}</td>
 				<td>{{m.schedule_time_id}}</td>
+				{% if m.p_g %}
+					<td>{{m.p_g}}</td>
+				{% else %}
+					<td></td>
+				{% endif %}
 				<td>{{m.schedule_name_id}}</td>
 				<td>{{m.schedule_type_id}}</td>
 				<td>{{m.schedule_teacher_id}}</td>
