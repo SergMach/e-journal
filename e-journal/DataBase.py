@@ -54,12 +54,17 @@ class DataBase:
             return []
 
 
-    def addUser(self, name, code, email, hpsw):
+    def addUser(self, code, email, hpsw):
         try:
             self.__cur.execute(f"SELECT COUNT() as count FROM users WHERE email LIKE '{email}'")
             res = self.__cur.fetchone()
             if res['count'] > 0:
                 flash("Пользователь с таким email уже существует" )
+                return False
+            self.__cur.execute(f"SELECT COUNT() as count FROM users WHERE code LIKE '{code}'")
+            res = self.__cur.fetchone()
+            if res['count'] > 0:
+                flash("Пользователь с таким кодом уже существует" )
                 return False
             try:
                 self.__cur.execute(f"SELECT * FROM kode WHERE code = '{code}' LIMIT 1")
@@ -69,6 +74,7 @@ class DataBase:
                     return False
                 [role], = self.__cur.execute('SELECT role FROM kode WHERE code=?', (code,))
                 [group_name], = self.__cur.execute('SELECT group_name FROM kode WHERE code=?', (code,))
+                [name], = self.__cur.execute('SELECT FIO FROM kode WHERE code=?', (code,))
                 print(role)
             except sqlite3.Error as e:
                 print("Ошибка получения данных из БД " + str(e))
