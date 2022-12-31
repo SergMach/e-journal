@@ -2,7 +2,6 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <link rel='stylesheet' href='style.css'>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
@@ -25,7 +24,6 @@
                      <a class='nav-active' href="index-schedule%20.html">РАСПИСАНИЕ</a>
                     <a class='nav-item' href="index-schedule%20speed.html">БЫСТРОЕ РАСПИСАНИЕ</a>
                 </div>
-                
                 <div class='phone'>
                     <div class='phone-holder'>
                         <div class='phone-img'>
@@ -48,10 +46,12 @@
             </div>
         </div>
     </div> -->
-    <div class='header' class='container' class='header-line'>
-        <div class='header-logo'>
-            <img src="logo.png" alt="">
-        </div>
+    <div class='header'>
+        <div class='container'>
+            <div class='header-line'>
+                <div class='header-logo'>
+                    <img src="static/logo.png" alt="">
+                </div>
         <nav class='nav-content'>
             {% block content -%}
                 {% block mainmenu -%}
@@ -88,6 +88,8 @@
                 {% endblock mainmenu -%}
             {% endblock content -%}
         </nav>
+            </div>
+        </div>
     </div>
 {% with messages = get_flashed_messages() %}
    {% if messages %}
