@@ -21,12 +21,9 @@ class DataBase:
 
     def getSchedule(self, user):
         [role], = self.__cur.execute('SELECT role FROM users WHERE id=?', (user,))
-        print(role)
         if role == 'student':
             [user_group], = self.__cur.execute('SELECT group_name FROM users WHERE id=?', (user,))
-            print(user_group)
             [group], = self.__cur.execute('SELECT id FROM schedule_group WHERE schedule_group_text=?', (user_group,))
-            print(group)
             sql = f"SELECT schedule.id, schedule.p_g, schedule_aud.schedule_aud_text AS schedule_aud_id, schedule_aud.schedule_aud_text AS schedule_aud_id, schedule_day.schedule_day_text AS schedule_day_id, schedule_group.schedule_group_text AS schedule_group_id, schedule_name.schedule_name_text AS schedule_name_id, schedule_time.schedule_time_text_place AS schedule_number_id, schedule_place.schedule_place_text AS schedule_place_id, schedule_teacher.schedule_teacher_text AS schedule_teacher_id, schedule_time.schedule_time_text AS schedule_time_id, schedule_name.schedule_name_text_type AS schedule_type_id FROM schedule JOIN schedule_day ON schedule.schedule_day_id = schedule_day.id JOIN schedule_group ON schedule.schedule_group_id = schedule_group.id JOIN schedule_name ON schedule.schedule_name_id = schedule_name.id JOIN schedule_place ON schedule.schedule_place_id = schedule_place.id JOIN schedule_teacher ON schedule.schedule_teacher_id = schedule_teacher.id JOIN schedule_time ON schedule.schedule_time_id = schedule_time.id JOIN schedule_aud ON schedule.schedule_aud_id = schedule_aud.id WHERE trim(schedule_group_id) LIKE '{group}' ORDER BY filt ASC, schedule_place_id ASC, schedule_number_id ASC, p_g ASC"
             try:
                 self.__cur.execute(sql)
@@ -38,9 +35,7 @@ class DataBase:
 
         if role == 'teacher':
             [user_name], = self.__cur.execute('SELECT name FROM users WHERE id=?', (user,))
-            print(user_name)
             [name], = self.__cur.execute('SELECT id FROM schedule_teacher WHERE schedule_teacher_text=?', (user_name,))
-            print(name)
             sql = f"SELECT schedule.id, schedule.p_g, schedule_aud.schedule_aud_text AS schedule_aud_id, schedule_day.schedule_day_text AS schedule_day_id, schedule_group.schedule_group_text AS schedule_group_id, schedule_name.schedule_name_text AS schedule_name_id, schedule_time.schedule_time_text_place AS schedule_number_id, schedule_place.schedule_place_text AS schedule_place_id, schedule_teacher.schedule_teacher_text AS schedule_teacher_id, schedule_time.schedule_time_text AS schedule_time_id, schedule_name.schedule_name_text_type AS schedule_type_id FROM schedule JOIN schedule_day ON schedule.schedule_day_id = schedule_day.id JOIN schedule_group ON schedule.schedule_group_id = schedule_group.id JOIN schedule_name ON schedule.schedule_name_id = schedule_name.id JOIN schedule_place ON schedule.schedule_place_id = schedule_place.id JOIN schedule_teacher ON schedule.schedule_teacher_id = schedule_teacher.id JOIN schedule_time ON schedule.schedule_time_id = schedule_time.id JOIN schedule_aud ON schedule.schedule_aud_id = schedule_aud.id WHERE trim(schedule_teacher_id) LIKE '{name}' ORDER BY filt ASC, schedule_place_id ASC, schedule_number_id ASC, p_g ASC"
             try:
                 self.__cur.execute(sql)
@@ -75,7 +70,6 @@ class DataBase:
                 [role], = self.__cur.execute('SELECT role FROM kode WHERE code=?', (code,))
                 [group_name], = self.__cur.execute('SELECT group_name FROM kode WHERE code=?', (code,))
                 [name], = self.__cur.execute('SELECT FIO FROM kode WHERE code=?', (code,))
-                print(role)
             except sqlite3.Error as e:
                 print("Ошибка получения данных из БД " + str(e))
 
@@ -144,7 +138,6 @@ class DataBase:
             try:
                 self.__cur.execute(sql)
                 res = self.__cur.fetchall()
-                print(res)
                 if res: return res
             except:
                 print("Ошибка чтения из БД")
@@ -222,7 +215,7 @@ class DataBase:
 
             try:
                 [type_check], = self.__cur.execute('SELECT schedule_name_text_type FROM schedule_name WHERE id=?', (name,))
-                print (type_check)
+
                 if type_check == 'Лекция':
                     self.__cur.execute(f"SELECT COUNT() as count FROM schedule WHERE schedule_name_id NOT LIKE '{name}' AND schedule_aud_id NOT LIKE '{aud}' AND schedule_day_id LIKE '{day}' AND schedule_teacher_id LIKE '{teacher}' AND schedule_place_id LIKE '{place}' AND schedule_time_id LIKE '{time}'")
                     res = self.__cur.fetchone()
@@ -304,7 +297,6 @@ class DataBase:
 
             try:
                 [type_check], = self.__cur.execute('SELECT schedule_name_text_type FROM schedule_name WHERE id=?', (name,))
-                print (type_check)
                 if type_check == 'Лекция':
                     self.__cur.execute(f"SELECT COUNT() as count FROM schedule WHERE schedule_name_id NOT LIKE '{name}' AND schedule_aud_id NOT LIKE '{aud}' AND schedule_day_id LIKE '{day}' AND schedule_teacher_id LIKE '{teacher}' AND schedule_place_id LIKE '{place}' AND schedule_time_id LIKE '{time}'")
                     res = self.__cur.fetchone()
@@ -371,7 +363,6 @@ class DataBase:
                 self.__db.commit()
             else:
                 [id], = self.__cur.execute('SELECT c_id FROM schedule WHERE schedule_group_id =? AND schedule_time_id =? AND schedule_place_id =? and schedule_day_id =? and p_g =?' , (schedule_group_delete,time_delete,place_delete,day_delete, p_group_delete))
-                print(id)
                 self.__cur.execute(f"DELETE FROM schedule WHERE schedule_group_id = {schedule_group_delete} AND schedule_time_id = {time_delete} AND schedule_place_id = {place_delete} and schedule_day_id = {day_delete} and p_g = {p_group_delete}")
                 self.__db.commit()
                 self.__cur.execute(f"DELETE FROM redactor_list_check WHERE check_id_parse = {id}")
@@ -397,7 +388,6 @@ class DataBase:
             try:
                 self.__cur.execute(sql)
                 res = self.__cur.fetchall()
-                print(res)
                 if res: return res
             except:
                 print("Ошибка чтения из БД")
@@ -411,7 +401,6 @@ class DataBase:
             try:
                 self.__cur.execute(sql)
                 res = self.__cur.fetchall()
-                print(res)
                 if res: return res
             except:
                 print("Ошибка чтения из БД")
@@ -428,7 +417,6 @@ class DataBase:
         return False
 
     def getNameGlobalList(self, group_active):
-        print(group_active)
         sql = f"SELECT list_name AS id, schedule_name.schedule_name_text AS list_name, schedule_name.schedule_name_text_type AS list_type, list_id as check_id, list_p_group FROM schedule_redactor_list JOIN schedule_name ON schedule_redactor_list.list_name = schedule_name.id WHERE trim(list_group) LIKE '{group_active}' AND trim(check_id) NOT IN (select check_id_parse from redactor_list_check) ORDER BY list_name"
         try:
             self.__cur.execute(sql)
