@@ -2,11 +2,9 @@
 
 {% block content -%}
     {% block user -%}
-        <ul1>
-        <li1><a>ФИО: {{user.name}}</a></li1>
-        <li1><a>Роль: {{user.role}}</a></li1>
-        <li1><a>Группа: {{user.group_name}}</a></li1>
-        <li1><a>Email: {{user.email}}</a></li1>
-        </ul1>
+    <br><a>ФИО: {{user.name}}</a><br>
+        <a>Роль: {{user.role}}</a><br>
+        <a>Группа: {{user.group_name}}</a><br>
+        <a>Email: {{user.email}}</a>
     {% endblock user -%}
 {% endblock content -%}

@@ -6,20 +6,20 @@
 
 {% block content %}
 	<form action="/attend" method="post" name="list">
-		<p><select name="group">
+		<p><select class="choice" name="group">
 			<option>Выберите группу</option>
 			{% for g in group -%}
 				<option value="{{ g.id }}">{{ g.schedule_group_text }}</option>
 			{% endfor -%}
 		</select></p>
-        <p><select name="teacher">
+        <p><select class="choice" name="teacher">
             <option>Выберите преподавателя</option>
             {% for t in teacher -%}
                 <option value="{{ t.id }}">{{ t.schedule_teacher_text }}</option>
             {% endfor -%}
         </select></p>
-        <p><select name="subj">
-            <option></option>
+        <p><select class="choice" name="subj">
+            <option>Группа</option>
             {% for n in subj -%}
             <option value="{{ n.id }}">{{ n.schedule_name_text }} {{ n.schedule_name_text_type }}</option>
             {% endfor -%}

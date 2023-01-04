@@ -115,6 +115,19 @@ li a:hover {
     -o-border-radius: 18px;
 }
 
+.choice {
+    cursor: pointer;
+    font-style: bold;
+    font-size: 20px;
+    line-height: 30px;
+    max-width: 316px;
+    margin: 0 auto;
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    -ms-border-radius: 10px;
+    -o-border-radius: 10px;
+}
+
 .form {
     max-width: 320px;
     padding: 15px;

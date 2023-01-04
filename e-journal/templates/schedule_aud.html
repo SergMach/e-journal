@@ -2,7 +2,7 @@
 
 {% block content %}
 	<form action="/schedule_aud" method="post" name="list">
-		<p><select name="aud">
+		<p><select class="choice" name="aud">
 			<option>Выберите из списка</option>
 			{% for a in aud -%}
 				<option value="{{ a.id }}">{{ a.schedule_aud_text }}</option>

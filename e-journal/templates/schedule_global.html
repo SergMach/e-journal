@@ -2,7 +2,7 @@
 
 {% block content %}
 	<form action="/schedule_global" method="post" name="list">
-		<p><select name="group">
+		<p><select class="choice" name="group">
 			<option>Выберите из списка</option>
 			{% for g in group -%}
 				<option value="{{ g.id }}">{{ g.schedule_group_text }}</option>
