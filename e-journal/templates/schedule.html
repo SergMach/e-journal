@@ -8,7 +8,7 @@ function myFunction() {
 
   Array.from(document.querySelectorAll('tbody tr')).forEach((tr, rowIdx) => {
     Array.from(tr.children).forEach((td, colIdx) => {
-      if (rowIdx > 0 && previousRow[colIdx].text === td.innerText) {
+      if (rowIdx > 0 && colIdx<1 && previousRow[colIdx].text === td.innerText) {
         previousRow[colIdx].elem.setAttribute('rowspan', ++previousRow[colIdx].span);
         colsChanged[colIdx] = false;
         td.remove();
