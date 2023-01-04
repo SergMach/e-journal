@@ -4,7 +4,7 @@
 
 {% block content %}
 	<form action="/schedule_global_redactor" method="post" name="list">
-		<p><select name="group_r">
+		<p><select class="choice" name="group_r">
 			<option>Выберите из списка</option>
 			{% for g in group -%}
 				<option value="{{ g.id }}">{{ g.schedule_group_text }}</option>
@@ -73,19 +73,19 @@ function myFunction() {
 			{% for i in number -%}
 				<tr>
 					<td>
-						<p><select name="schedule_group">
+						<p><select class="choice" name="schedule_group">
 							<option value="{{schedule_group}}" selected>Добавьте пару</option>
 						</select></p>
 					</td>
 					<td>
-						<p><select name="p_group">
+						<p><select class="choice" name="p_group">
 							<option value="0">Без подгруппы</option>
 							<option value="1">Подгруппа 1</option>
 							<option value="2">Подгруппа 2</option>
 						</select></p>
 					</td>
 					<td>
-						<p><select name="day">
+						<p><select class="choice" name="day">
 							<option></option>
 							<option value="1">Понедельник</option>
 							<option value="2">Вторник</option>
@@ -96,14 +96,14 @@ function myFunction() {
 						</select></p>
 					</td>
 					<td>
-						<p><select name="place">
+						<p><select class="choice" name="place">
 							<option></option>
 							<option value="1">Верхняя</option>
 							<option value="2">Нижняя</option>
 						</select></p>
 					</td>
 					<td>
-						<p><select name="time">
+						<p><select class="choice" name="time">
 							<option></option>
 							<option value="1">9:00 - 10:30</option>
 							<option value="2">10:40 - 12:10</option>
@@ -115,7 +115,7 @@ function myFunction() {
 						</select></p>
 					</td>
 					<td>
-						<p><select name="name", id="jqueryselect">
+						<p><select class="choice" name="name", id="jqueryselect">
 							<option></option>
 							{% for n in name -%}
 							<option value="{{ n.id }}, {{n.check_id}}, {{n.list_p_group}}">{{ n.list_name }} {{ n.list_type }}
@@ -129,14 +129,14 @@ function myFunction() {
 						</select></p>
 					</td>
 					<td>
-						<p><select name="teacher">
+						<p><select class="choice" name="teacher">
 							<option></option>
 							{% for t in teacher -%}
 							<option value="{{ t.id }}">{{ t.list_teacher }}</option>
 							{% endfor -%}
 						</select></p></td>
 					<td>
-						<p><select name="aud">
+						<p><select class="choice" name="aud">
 							<option></option>
 							{% for a in aud -%}
 							<option value="{{ a.id }}">{{ a.schedule_aud_text }}</option>
@@ -144,26 +144,25 @@ function myFunction() {
 						</select></p>
 					</td>
 				</tr>
-			{% endfor -%}
-
 			<tr><p><input type="submit" class="form-sub" value="Добавить" /></form></tr>
 		</tbody>
 	</table>
+			{% endfor -%}
 
 <table class="iksweb">
 	<tbody>
 		<tr>
 			<form action="/schedule_global_redactor" method="post" class="form-contact">
 			{% for i in number -%}
-					<td><p><select name="schedule_group_delete">
+					<td><p><select class="choice" name="schedule_group_delete">
 						<option value="{{schedule_group}}" selected>Удалите пару</option>
 					</select></p></td>
-					<td><p><select name="p_group_delete">
+					<td><p><select class="choice" name="p_group_delete">
 						<option value="0">Без подгруппы</option>
 						<option value="1">Подгруппа 1</option>
 						<option value="2">Подгруппа 2</option>
 					</select></p></td>
-						<td><p><select name="day_delete">
+						<td><p><select class="choice" name="day_delete">
 						<option></option>
 						<option value="1">Понедельник</option>
 						<option value="2">Вторник</option>
@@ -172,12 +171,12 @@ function myFunction() {
 						<option value="5">Пятница</option>
 						<option value="6">Суббота</option>
 					</select></p></td>
-						<td><p><select name="place_delete">
+						<td><p><select class="choice" name="place_delete">
 						<option></option>
 						<option value="1">Верхняя</option>
 						<option value="2">Нижняя</option>
 					</select></p></td>
-						<td><p><select name="time_delete">
+						<td><p><select class="choice" name="time_delete">
 						<option></option>
 						<option value="1">9:00 - 10:30</option>
 						<option value="2">10:40 - 12:10</option>
@@ -187,12 +186,13 @@ function myFunction() {
 						<option value="6">17:50 - 19:20</option>
 						<option value="7">19:30 - 21:00</option>
 					</select></p></td>
-			{% endfor -%}
-					<p><input type="submit" class="form-sub" value="Удалить" />
-				</form>
+				<p><input type="submit" class="form-sub" value="Удалить" />
+			</form>
 		</tr>
 	</tbody>
 </table>
+			{% endfor -%}
+
 
 	<table class="iksweb", border="1">
 		<tbody>
@@ -200,19 +200,19 @@ function myFunction() {
 			{% for i in number -%}
 				<tr>
 					<td>
-						<p><select name="schedule_group_repl">
+						<p><select class="choice" name="schedule_group_repl">
 							<option value="{{schedule_group}}" selected>Замените пару</option>
 						</select></p>
 					</td>
 					<td>
-						<p><select name="p_group_repl">
+						<p><select class="choice" name="p_group_repl">
 							<option value="0">Без подгруппы</option>
 							<option value="1">Подгруппа 1</option>
 							<option value="2">Подгруппа 2</option>
 						</select></p>
 					</td>
 					<td>
-						<p><select name="day_repl">
+						<p><select class="choice" name="day_repl">
 							<option></option>
 							<option value="1">Понедельник</option>
 							<option value="2">Вторник</option>
@@ -223,14 +223,14 @@ function myFunction() {
 						</select></p>
 					</td>
 					<td>
-						<p><select name="place_repl">
+						<p><select class="choice" name="place_repl">
 							<option></option>
 							<option value="1">Верхняя</option>
 							<option value="2">Нижняя</option>
 						</select></p>
 					</td>
 					<td>
-						<p><select name="time_repl">
+						<p><select class="choice" name="time_repl">
 							<option></option>
 							<option value="1">9:00 - 10:30</option>
 							<option value="2">10:40 - 12:10</option>
@@ -242,7 +242,7 @@ function myFunction() {
 						</select></p>
 					</td>
 					<td>
-						<p><select name="name_repl", id="jqueryselect">
+						<p><select class="choice" name="name_repl", id="jqueryselect">
 							<option></option>
 							{% for n in name -%}
 							<option value="{{ n.id }}, {{n.check_id}}, {{n.list_p_group}}">{{ n.list_name }} {{ n.list_type }}
@@ -256,14 +256,14 @@ function myFunction() {
 						</select></p>
 					</td>
 					<td>
-						<p><select name="teacher_repl">
+						<p><select class="choice" name="teacher_repl">
 							<option></option>
 							{% for t in teacher -%}
 							<option value="{{ t.id }}">{{ t.list_teacher }}</option>
 							{% endfor -%}
 						</select></p></td>
 					<td>
-						<p><select name="aud_repl">
+						<p><select class="choice" name="aud_repl">
 							<option></option>
 							{% for a in aud -%}
 							<option value="{{ a.id }}">{{ a.schedule_aud_text }}</option>
@@ -271,8 +271,9 @@ function myFunction() {
 						</select></p>
 					</td>
 				</tr>
-			{% endfor -%}
-
 			<tr><p><input type="submit" class="form-sub" value="Заменить" /></form></tr>
 		</tbody>
 	</table>
+			{% endfor -%}
+
+
