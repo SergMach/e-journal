@@ -1,12 +1,12 @@
 {% include 'base.html' %}
 
 {% block content %}
-    <form action="/register" method="post" class="form-contact">
+    <form action="/register" method="post" class="form">
          <!--<p><label>ФИО: </label> <input type="text" name="name" value="" requied />-->
-        <p><label>Код: </label> <input type="text" name="code" value="" requied />
-        <p><label>Email: </label> <input type="text" name="email" value="" requied />
-        <p><label>Паpоль: </label> <input type="password" name="psw" value="" requied />
-        <p><label>Повтор пароля: </label> <input type="password" name="psw2" value="" requied />
-        <p><input type="submit" value="Pеrистрация" />
+        <p><input placeholder="Код" class="input" type="text" name="code" value="" requied />
+        <p><input placeholder="Ваш email" class="input" type="text" name="email" value="" requied />
+        <p><input placeholder="Пароль" class="input" type="password" name="psw" value="" requied />
+        <p><input placeholder="Повтор пароля" class="input" type="password" name="psw2" value="" requied />
+        <p><input type="submit" class="form-sub" value="Pеrистрация" />
     </form>
 {% endblock %}

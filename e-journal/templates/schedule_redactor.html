@@ -8,7 +8,7 @@
 				<option value="{{ g.id }}">{{ g.schedule_group_text }}</option>
 			{% endfor -%}
 		</select></p>
-		<p><input type="submit" value="Отправить"></p>
+		<p><input type="submit" class="form-sub" value="Отправить"></p>
 	</form>
 {% endblock %}
 
@@ -117,7 +117,7 @@ function myFunction() {
 						<option value="{{ a.id }}">{{ a.schedule_aud_text }}</option>
 						{% endfor -%}
 					</select></p>
-				<p><input type="submit" value="Добавить" />
+				<p><input type="submit" class="form-sub" value="Добавить" />
 				</form>
 			</td>
 		</tr>
@@ -163,7 +163,7 @@ function myFunction() {
 						<option value="6">17:50 - 19:20</option>
 						<option value="7">19:30 - 21:00</option>
 					</select></p></td>
-					<p><input type="submit" value="Удалить" />
+					<p><input type="submit" class="form-sub" value="Удалить" />
 				</form>
 		</tr>
 	</tbody>

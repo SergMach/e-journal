@@ -1,12 +1,12 @@
 {% include 'base.html' %}
 
 {% block content %}
-    <form action="/login" method="post" class="form-contact">
-        <p><label>Email: </label> <input type="text" name="email" value="" requied />
-        <p><label>Паpоль: </label> <input type="password" name="psw" value="" requied />
+    <form action="/login" method="post" class="form">
+        <p><input class="input" placeholder="Ваш email" type="text" name="email" value="" requied />
+        <p><input class="input" placeholder="Ваш пароль" type="password" name="psw" value="" requied />
          <!--<p><input type="checkbox" name="remainme" /> Запомнить меня-->
-        <p><input type="submit" value="Bойти" />
+        <p><input type="submit" class="form-sub" value="Bойти" />
         <hr align-left width="300px">
-        <p><a href="{{url_for('register')}}"> Регистрация </a>
+        <p><a class="form-sub" href="{{url_for('register')}}"> Регистрация </a>
     </form>
 {% endblock %}
