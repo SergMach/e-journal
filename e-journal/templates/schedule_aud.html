@@ -8,7 +8,7 @@
 				<option value="{{ a.id }}">{{ a.schedule_aud_text }}</option>
 			{% endfor -%}
 		</select></p>
-		<p><input type="submit" value="Отправить"></p>
+		<p><input type="submit" class="form-sub" value="Отправить"></p>
 	</form>
 {% endblock %}
 
@@ -63,6 +63,6 @@ function myFunction() {
 		{% endfor -%}
 		</tbody>
 	</table>
-<a href="schedule_global">Расписание по группам</a>
-<a href="schedule_teacher">Расписание по преподователям</a>
+<a href="schedule_global" class="form-shedule">Расписание по группам</a>
+<a href="schedule_teacher" class="form-shedule">Расписание по преподователям</a>
 </body>

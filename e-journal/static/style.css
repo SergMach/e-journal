@@ -11,7 +11,6 @@
     padding-left: 40px;
 }
 
-
 .class-menu-h3 {
     display: inline-block;
     margin: 20px 35% 0;
@@ -93,4 +92,63 @@ li a:hover {
 
 .is-selected {
   display: none;
+}
+
+.form-shedule {
+    color: rgb(255, 255, 255);
+    border: none;
+    border-radius: 18px;
+    background: #7373D9;
+    padding: 14px 16px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    cursor: pointer;
+    font-style: bold;
+    font-size: 20px;
+    line-height: 30px;
+    max-width: 316px;
+    margin: 0 auto;
+    -webkit-border-radius: 18px;
+    -moz-border-radius: 18px;
+    -ms-border-radius: 18px;
+    -o-border-radius: 18px;
+}
+
+.form {
+    max-width: 320px;
+    padding: 15px;
+    margin: 20px auto;
+    background-color: #fff;
+}
+  
+.input {
+    display: block;
+    width: 100%;
+    padding: 8px 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    font-family: inherit;
+    font-size: 16px;
+}
+
+.form-sub {
+    color: rgb(255, 255, 255);
+    border: none;
+    border-radius: 18px;
+    background: #7373D9;
+    padding: 14px 16px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    cursor: pointer;
+    font-style: bold;
+    font-size: 20px;
+    line-height: 30px;
+    max-width: 316px;
+    margin: 10px auto;
+    -webkit-border-radius: 18px;
+    -moz-border-radius: 18px;
+    -ms-border-radius: 18px;
+    -o-border-radius: 18px;
 }

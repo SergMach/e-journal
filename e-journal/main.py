@@ -1,7 +1,7 @@
 from flask import Flask, render_template,  request, g, redirect, url_for, flash, render_template_string
 from flask_login import LoginManager, login_user, login_required, logout_user, current_user
 from UserLogin import UserLogin
-from flask_ngrok import run_with_ngrok
+#from flask_ngrok import run_with_ngrok
 
 import sqlite3
 import os
