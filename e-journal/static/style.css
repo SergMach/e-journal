@@ -97,6 +97,12 @@ li a:hover {
 .form-shedule {
     color: rgb(255, 255, 255);
     border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 50%;
+    text-align: center;
+    vertical-align: middle;
     border-radius: 18px;
     background: #7373D9;
     padding: 14px 16px;
@@ -113,6 +119,8 @@ li a:hover {
     -moz-border-radius: 18px;
     -ms-border-radius: 18px;
     -o-border-radius: 18px;
+    position:relative;
+    left:27%;
 }
 
 .form {
