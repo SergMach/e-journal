@@ -359,7 +359,7 @@ class DataBase:
                 self.__cur.execute(f"SELECT COUNT() as count FROM schedule WHERE schedule_group_id ='{schedule_group_delete}' AND schedule_time_id ='{time_delete}' AND schedule_place_id ='{place_delete}' and schedule_day_id ='{day_delete}'")
                 checking = self.__cur.fetchone()
                 if checking['count'] > 1:
-                    flash("Выберите подгруппу корректно")
+                    flash("Выберите подгруппу")
                     return False
                 [id], = self.__cur.execute('SELECT c_id FROM schedule WHERE schedule_group_id =? AND schedule_time_id =? AND schedule_place_id =? and schedule_day_id =?', (schedule_group_delete,time_delete,place_delete,day_delete))
                 self.__cur.execute(f"DELETE FROM schedule WHERE schedule_group_id = {schedule_group_delete} AND schedule_time_id = {time_delete} AND schedule_place_id = {place_delete} and schedule_day_id = {day_delete}")
