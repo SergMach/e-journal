@@ -422,6 +422,7 @@ class DataBase:
             self.__cur.execute(sql)
             res = self.__cur.fetchall()
             if res: return res
+            else: return res
         except sqlite3.Error as e:
             print("Ошибка получения данных из БД "+str(e))
         return False
