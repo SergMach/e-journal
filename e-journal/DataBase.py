@@ -187,8 +187,7 @@ class DataBase:
         return False
 
     def addScheduleBlock(self, schedule_group, name, day, place, time, teacher, aud, id2, p_group, check_p_group):
-        print(name)
-        print(place)
+
         if schedule_group == '' or name == '""' or day == '' or place == '' or time == '' or teacher == '' or aud == '' or id2 == '':
             flash("Заполните все строки")
             return False
