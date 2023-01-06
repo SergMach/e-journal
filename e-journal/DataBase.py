@@ -437,3 +437,14 @@ class DataBase:
         except sqlite3.Error as e:
             print("Ошибка получения данных из БД "+str(e))
         return False
+
+
+    def deleteScheduleAll(self, group):
+        try:
+            self.__cur.execute(f"DELETE FROM redactor_list_check WHERE check_id_parse IN (SELECT c_id FROM schedule WHERE trim(schedule_group_id) LIKE '{group}')")
+            self.__db.commit()
+            self.__cur.execute(f"DELETE FROM schedule WHERE trim(schedule_group_id) LIKE '{group}'")
+            self.__db.commit()
+        except sqlite3.Error as e:
+            print("Ошибка получения данных из БД "+str(e))
+        return False

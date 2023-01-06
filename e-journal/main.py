@@ -237,6 +237,13 @@ def schedule_global_redactor():
             except: pass
 
             try:
+                res = dbase.deleteScheduleAll(request.form['schedule_group_delete_all'])
+                if res:
+                    return render_template("schedule_global_redactor.html", role=role,  menu=dbase.getMenu(), group=dbase.getGroupList(), name=dbase.getNameGlobalList(schedule_group_check), teacher = dbase.getTeacherGlobalList(schedule_group_check), aud=dbase.getAudList(), number=number, schedule_group=schedule_group_check, schedule=dbase.getGroupSchedule(schedule_group_check), title="Редактирование расписания")
+                else: return render_template("schedule_global_redactor.html", role=role,  menu=dbase.getMenu(), group=dbase.getGroupList(), name=dbase.getNameGlobalList(schedule_group_check), teacher = dbase.getTeacherGlobalList(schedule_group_check), aud=dbase.getAudList(), number=number, schedule_group=schedule_group_check, schedule=dbase.getGroupSchedule(schedule_group_check), title="Редактирование расписания")
+            except: pass
+
+            try:
                 schedule_group = (request.form.getlist('schedule_group_repl'))
                 name = (request.form.getlist('name_repl'))
                 name1 = []

@@ -23,7 +23,7 @@ function myFunction() {
 
   Array.from(document.querySelectorAll('tbody tr')).forEach((tr, rowIdx) => {
     Array.from(tr.children).forEach((td, colIdx) => {
-      if (rowIdx > 0 && previousRow[colIdx].text === td.innerText) {
+      if (rowIdx > 0 && colIdx<1 && previousRow[colIdx].text === td.innerText) {
         previousRow[colIdx].elem.setAttribute('rowspan', ++previousRow[colIdx].span);
         colsChanged[colIdx] = false;
         td.remove();
@@ -276,4 +276,19 @@ function myFunction() {
 	</table>
 			{% endfor -%}
 
+
+<table class="iksweb" border="1">
+	<tbody>
+		<tr>
+			<form action="/schedule_global_redactor" method="post" class="form-contact">
+			{% for i in number -%}
+					<td><p><select class="choice" name="schedule_group_delete_all">
+						<option value="{{schedule_group}}" selected>Удалить все пары</option>
+					</select></p></td>
+				<p><input type="submit" class="form-sub" value="Удалить" />
+			</form>
+		</tr>
+	</tbody>
+</table>
+			{% endfor -%}
 
