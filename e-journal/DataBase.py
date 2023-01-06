@@ -187,6 +187,12 @@ class DataBase:
         return False
 
     def addScheduleBlock(self, schedule_group, name, day, place, time, teacher, aud, id2, p_group, check_p_group):
+        print(name)
+        print(place)
+        if schedule_group == '' or name == '""' or day == '' or place == '' or time == '' or teacher == '' or aud == '' or id2 == '':
+            flash("Заполните все строки")
+            return False
+
         if check_p_group == 'None' and p_group != '0':
             flash("Это пара не для подгрупп")
             return False
@@ -350,6 +356,9 @@ class DataBase:
             return True
 
     def deleteScheduleBlock(self, schedule_group_delete, day_delete, place_delete, time_delete, p_group_delete):
+        if schedule_group_delete == '' or day_delete == '' or place_delete == '' or time_delete == '' or p_group_delete == '':
+            flash("Заполните все строки")
+            return False
         try:
             self.__cur.execute(f"SELECT COUNT() as count FROM schedule WHERE schedule_group_id ={schedule_group_delete} AND schedule_time_id = {time_delete} AND schedule_place_id ={place_delete} and schedule_day_id ={day_delete}")
             res = self.__cur.fetchone()
