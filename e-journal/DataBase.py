@@ -215,14 +215,14 @@ class DataBase:
 
             try:
                 [type_check], = self.__cur.execute('SELECT schedule_name_text_type FROM schedule_name WHERE id=?', (name,))
-
-                if type_check == 'Лекция':
+                [voenka], = self.__cur.execute('SELECT schedule_name_text FROM schedule_name WHERE id=?', (name,))
+                if type_check == 'Лекция' or voenka == 'Военная подготовка':
                     self.__cur.execute(f"SELECT COUNT() as count FROM schedule WHERE schedule_name_id NOT LIKE '{name}' AND schedule_aud_id NOT LIKE '{aud}' AND schedule_day_id LIKE '{day}' AND schedule_teacher_id LIKE '{teacher}' AND schedule_place_id LIKE '{place}' AND schedule_time_id LIKE '{time}'")
                     res = self.__cur.fetchone()
                     if res['count'] > 0:
                         flash("Преподователь занят")
                         return False
-                if type_check == 'Практика':
+                if type_check == 'Практика' and voenka != 'Военная подготовка':
                     self.__cur.execute(f"SELECT COUNT() as count FROM schedule WHERE schedule_day_id LIKE '{day}' AND schedule_teacher_id LIKE '{teacher}' AND schedule_place_id LIKE '{place}' AND schedule_time_id LIKE '{time}'")
                     res = self.__cur.fetchone()
                     if res['count'] > 0:
@@ -234,14 +234,15 @@ class DataBase:
 
             try:
                 [type_check], = self.__cur.execute('SELECT schedule_name_text_type FROM schedule_name WHERE id=?', (name,))
-                if type_check == 'Практика':
+                [voenka], = self.__cur.execute('SELECT schedule_name_text FROM schedule_name WHERE id=?', (name,))
+                if type_check == 'Практика' and voenka != 'Военная подготовка':
                     self.__cur.execute(f"SELECT COUNT() as count FROM schedule WHERE schedule_day_id LIKE '{day}' AND schedule_aud_id LIKE '{aud}' AND schedule_place_id LIKE '{place}' AND schedule_time_id LIKE '{time}'")
                     res = self.__cur.fetchone()
                     if res['count'] > 0:
                         flash("Аудитория занята")
                         return False
 
-                if type_check == 'Лекция':
+                if type_check == 'Лекция' or voenka == 'Военная подготовка':
                     self.__cur.execute(f"SELECT COUNT() as count FROM schedule WHERE schedule_teacher_id NOT LIKE '{teacher}' AND schedule_day_id LIKE '{day}' AND schedule_aud_id LIKE '{aud}' AND schedule_place_id LIKE '{place}' AND schedule_time_id LIKE '{time}'")
                     res = self.__cur.fetchone()
                     if res['count'] > 0:
