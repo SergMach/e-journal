@@ -3,7 +3,6 @@ import sqlite3
 from datetime import time
 from flask import flash
 
-
 class DataBase:
     def __init__ (self, db):
         self.__db = db

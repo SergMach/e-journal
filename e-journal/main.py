@@ -8,7 +8,7 @@ import os
 from DataBase import DataBase
 from werkzeug.security import generate_password_hash, check_password_hash
 
-DATABASE = '/tmp/e_journal.db'
+DATABASE = './e_journal.db'
 SECRET_KEY = 'fdgfh78@#5?>gfhf89dx,v06k'
 
 app = Flask(__name__)
