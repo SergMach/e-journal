@@ -1,7 +1,6 @@
-import math
 import sqlite3
-from datetime import time
 from flask import flash
+
 
 
 class DataBase:
@@ -452,6 +451,41 @@ class DataBase:
             self.__cur.execute(f"DELETE FROM redactor_list_check WHERE check_id_parse IN (SELECT c_id FROM schedule WHERE trim(schedule_group_id) LIKE '{group}')")
             self.__db.commit()
             self.__cur.execute(f"DELETE FROM schedule WHERE trim(schedule_group_id) LIKE '{group}'")
+            self.__db.commit()
+        except sqlite3.Error as e:
+            print("Ошибка получения данных из БД "+str(e))
+        return False
+
+    def SchUpd(self, num):
+        try:
+            import parser
+            self.__cur.execute("DELETE FROM schedule_name")
+            self.__db.commit()
+            self.__cur.execute("DELETE FROM schedule_group")
+            self.__db.commit()
+            self.__cur.execute("DELETE FROM schedule_aud")
+            self.__db.commit()
+            self.__cur.execute("DELETE FROM schedule_teacher")
+            self.__db.commit()
+            self.__cur.execute("DELETE FROM schedule_redactor_list")
+            self.__db.commit()
+            self.__cur.execute("DELETE FROM schedule")
+            self.__db.commit()
+            self.__cur.execute("DELETE FROM redactor_list_check")
+            self.__db.commit()
+            self.__cur.execute("INSERT OR REPLACE into schedule_name (schedule_name_text, schedule_name_text_type) SELECT DISTINCT subject, subj_type from parse_schedule")
+            self.__db.commit()
+            self.__cur.execute("INSERT OR REPLACE into schedule_group (schedule_group_text) SELECT DISTINCT full_group from parse_schedule")
+            self.__db.commit()
+            self.__cur.execute("INSERT OR REPLACE into schedule_aud (schedule_aud_text) SELECT DISTINCT aud from parse_schedule")
+            self.__db.commit()
+            self.__cur.execute("INSERT OR REPLACE into schedule_teacher (schedule_teacher_text) SELECT DISTINCT teacher from parse_schedule")
+            self.__db.commit()
+            self.__cur.execute("INSERT OR REPLACE into schedule_redactor_list (list_id ,list_group, list_teacher, list_name, list_type, list_p_group)  SELECT parse_id, schedule_group.id AS full_group, schedule_teacher.id AS teacher, schedule_name.id AS subject, schedule_name.id AS subj_type, p_group FROM parse_schedule JOIN schedule_group ON parse_schedule.full_group = schedule_group.schedule_group_text JOIN schedule_teacher ON parse_schedule.teacher = schedule_teacher.schedule_teacher_text JOIN schedule_name ON parse_schedule.subject = schedule_name.schedule_name_text WHERE trim(subject) LIKE trim(schedule_name_text) AND trim(subj_type) LIKE trim(schedule_name_text_type)")
+            self.__db.commit()
+            self.__cur.execute("INSERT OR REPLACE into schedule (c_id, schedule_group_id, schedule_place_id, schedule_day_id, schedule_time_id, schedule_teacher_id, schedule_aud_id, schedule_name_id, schedule_type_id, filt, p_g) SELECT parse_id, schedule_group.id AS full_group, schedule_place.id AS week, schedule_day.id AS day, schedule_time.id AS number_lesson, schedule_teacher.id AS teacher, schedule_aud.id AS aud, schedule_name.id AS subject, schedule_name.id AS subj_type, schedule_day.id AS filt, p_group FROM parse_schedule JOIN schedule_group ON parse_schedule.full_group = schedule_group.schedule_group_text JOIN schedule_place ON parse_schedule.week  = schedule_place.schedule_place_text JOIN schedule_day ON parse_schedule.day  = schedule_day.schedule_day_text JOIN schedule_time ON parse_schedule.number_lesson  = schedule_time.schedule_time_text_place JOIN schedule_teacher ON parse_schedule.teacher = schedule_teacher.schedule_teacher_text JOIN schedule_aud ON parse_schedule.aud = schedule_aud.schedule_aud_text JOIN schedule_name ON parse_schedule.subject = schedule_name.schedule_name_text WHERE trim(subject) LIKE trim(schedule_name_text) AND trim(subj_type) LIKE trim(schedule_name_text_type)")
+            self.__db.commit()
+            self.__cur.execute("INSERT OR REPLACE into redactor_list_check (check_id_parse) SELECT c_id from schedule")
             self.__db.commit()
         except sqlite3.Error as e:
             print("Ошибка получения данных из БД "+str(e))

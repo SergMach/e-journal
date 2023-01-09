@@ -244,6 +244,13 @@ def schedule_global_redactor():
             except: pass
 
             try:
+                res = dbase.SchUpd(request.form['upd'])
+                if res:
+                    return render_template("schedule_global_redactor.html", menu=dbase.getMenu(), role=role, group=dbase.getGroupList(), title="Редактирование расписания")
+                else: return render_template("schedule_global_redactor.html", menu=dbase.getMenu(), role=role, group=dbase.getGroupList(), title="Редактирование расписания")
+            except: pass
+
+            try:
                 schedule_group = (request.form.getlist('schedule_group_repl'))
                 name = (request.form.getlist('name_repl'))
                 name1 = []
@@ -300,4 +307,4 @@ def schedule_redactor():
     else: return render_template("index.html", menu=dbase.getMenu(), title="Редактирование расписания")
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(host='0.0.0.0')
