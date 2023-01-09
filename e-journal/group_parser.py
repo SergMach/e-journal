@@ -142,18 +142,16 @@ def main_parser():
                 VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
             """, (fak, kurs, grup, week[num], day[num], lesson[num], subject[num], teacher[num], aud[num], subj_type[num], p_group[num]))
             connection.commit()
-            # cursor.execute('''
-            #     DELETE a.* FROM mytable a,
-            #         (SELECT
-            #         b.country_id, b.city_name, MIN(b.id) mid
-            #         FROM mytable b
-            #         GROUP BY b.country_id, b.city_name
-            #         ) c
-            #     WHERE
-            #         a.country_id = c.country_id
-            #         AND a.city_name = c.city_name
-            #         AND a.id > c.mid
-            # ''')
+        cursor.execute('''
+            INSERT OR REPLACE into parse_schedule (faculty, course, full_group, week, day, number_lesson, subject, teacher, aud, subj_type, p_group) 
+            SELECT DISTINCT bad_faculty, bad_course, bad_group, bad_week, bad_day, bad_lesson, bad_subject, bad_teacher, bad_aud, bad_subj_type, bad_p_group from bad_parse
+        ''')
+        connection.commit()
+        cursor.execute(""" 
+            DELETE FROM bad_parse
+        """)
+        connection.commit()
+
 
 
     # for it in dirty_data:
