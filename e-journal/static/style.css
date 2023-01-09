@@ -99,6 +99,11 @@ li a:hover {
   display: none;
 }
 
+.error {
+    color: rgb(255, 0, 0);
+    margin: 0 auto
+}
+
 .form-shedule {
     color: rgb(255, 255, 255);
     border: none;
@@ -111,7 +116,6 @@ li a:hover {
     border-radius: 18px;
     background: #7373D9;
     padding: 14px 16px;
-    text-align: center;
     text-decoration: none;
     display: inline-block;
     cursor: pointer;
