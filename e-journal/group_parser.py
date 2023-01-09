@@ -144,14 +144,46 @@ def main_parser():
                 VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
             """, (fak, kurs, grup, week[num], day[num], lesson[num], subject[num], teacher[num], aud[num], subj_type[num], p_group[num]))
             connection.commit()
+
+        '''запись уникального расписания'''
         cursor.execute('''
             INSERT OR REPLACE into parse_schedule (faculty, course, full_group, week, day, number_lesson, subject, teacher, aud, subj_type, p_group) 
             SELECT DISTINCT bad_faculty, bad_course, bad_group, bad_week, bad_day, bad_lesson, bad_subject, bad_teacher, bad_aud, bad_subj_type, bad_p_group from bad_parse
         ''')
         connection.commit()
+
+        '''чистка плохой таблицы'''
         cursor.execute(""" 
             DELETE FROM bad_parse
         """)
+        connection.commit()
+
+        '''заполнение аудиторий'''
+        cursor.execute('''
+            INSERT OR REPLACE into schedule_aud (schedule_aud_text) 
+            SELECT DISTINCT aud from parse_schedule
+        ''')
+        connection.commit()
+
+        '''заполнение групп'''
+        cursor.execute('''
+            INSERT OR REPLACE into schedule_group (schedule_group_text) 
+            SELECT DISTINCT full_group from parse_schedule
+        ''')
+        connection.commit()
+
+        '''заполнение дисциплин'''
+        cursor.execute('''
+            INSERT OR REPLACE into schedule_name (schedule_name_text, schedule_name_text_type) 
+            SELECT DISTINCT subject, subj_type from parse_schedule
+        ''')
+        connection.commit()
+
+        '''заполнение учителей'''
+        cursor.execute('''
+            INSERT OR REPLACE into schedule_teacher (schedule_teacher_text) 
+            SELECT DISTINCT teacher from parse_schedule
+        ''')
         connection.commit()
 
     # for it in dirty_data:
