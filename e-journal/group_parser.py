@@ -10,7 +10,7 @@ def isit1():
 
     dirty_data = list()
     fak = 'ФГиИБ' #str(input('Введите факультет (ГФ, КФ, ФГиИБ, ФАГ, )))
-    kurs = '1'
+    kurs = '1'  
     grup = '2022-ФГиИБ-ИСиТ-1б' #, '2022-ФГиИБ-ИСиТ-2б', '2022-ФГиИБ-ИСиТ-3б'
 
     data_schedule = requests.post(url=url_site, data={'fak':fak, 'kurs':kurs, 'grup':grup}, headers=headers)
@@ -131,11 +131,12 @@ def isit1():
         # print(len(day))
         connection = sqlite3.connect('e_journal.db')
         cursor = connection.cursor()
-        for i in range(1, len(day)):
-            cursor.execute(""" 
-            INSERT INTO parse_schedule (faculty, course, full_group, week, day, number_lesson, subject, teacher, aud, subj_type, p_group)
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-            """, (fak, kurs, grup, week, day, lesson, subject, teacher, aud, subj_type, p_group))
+        for num in range(1, len(day)):
+            print(f'Факультет {fak}\n Курс {kurs}\n Группа {grup}\nДень {day[num]}\n Пары {lesson[num]}\n Неделя {week[num]}\n Подгруппа {p_group[num]}\n Предмет {subject[num]}\n Препод {teacher[num]}\n Аудитория {aud[num]}\n Тип {subj_type[num]}')
+            # cursor.execute(""" 
+            #     INSERT INTO parse_schedule (faculty, course, full_group, week, day, number_lesson, subject, teacher, aud, subj_type, p_group)
+            #     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+            # """, (fak, kurs, grup, week, day, lesson, subject, teacher, aud, subj_type, p_group))
 
     # for it in dirty_data:
     #     for iter in it:
