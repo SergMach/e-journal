@@ -142,18 +142,18 @@ def main_parser():
                 VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
             """, (fak, kurs, grup, week[num], day[num], lesson[num], subject[num], teacher[num], aud[num], subj_type[num], p_group[num]))
             connection.commit()
-            cursor.execute('''
-                DELETE a.* FROM mytable a,
-                    (SELECT
-                    b.country_id, b.city_name, MIN(b.id) mid
-                    FROM mytable b
-                    GROUP BY b.country_id, b.city_name
-                    ) c
-                WHERE
-                    a.country_id = c.country_id
-                    AND a.city_name = c.city_name
-                    AND a.id > c.mid
-            ''')
+            # cursor.execute('''
+            #     DELETE a.* FROM mytable a,
+            #         (SELECT
+            #         b.country_id, b.city_name, MIN(b.id) mid
+            #         FROM mytable b
+            #         GROUP BY b.country_id, b.city_name
+            #         ) c
+            #     WHERE
+            #         a.country_id = c.country_id
+            #         AND a.city_name = c.city_name
+            #         AND a.id > c.mid
+            # ''')
 
 
     # for it in dirty_data:
