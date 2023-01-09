@@ -87,21 +87,67 @@ def isit1():
         except: 
             pass
     
-    data = []
-    for it in dirty_data:
-        for iter in it:
-            if iter:
-                if len(iter) <= 2:
-                    del iter
-                    continue
-                data.append(iter)
-                for elem in iter:
-                    if elem.strip() == '\xa0':
-                        elem = ""
-                    data.append(elem.strip())
+    one_data = []
 
-                
-    
+    day = []
+    lesson = []
+    week = []
+    p_group = []
+    subject = []
+    teacher = []
+    aud = []
+    subj_type = []
+    comment = []
+
+    for it in dirty_data:
+        for ite in it:
+            if (ite) and (len(ite) <= 2):
+                del ite
+                continue
+            print(ite)
+            for iter in ite:
+                one_data.append(iter.strip())
+                print(len(one_data))
+                if len(one_data) % 9 == 1:
+                    day.append(iter)
+                if len(one_data) % 9 == 2:
+                    lesson.append(iter)
+                if len(one_data) % 9 == 3:
+                    week.append(iter)
+                if len(one_data) % 9 == 4:
+                    p_group.append(iter)
+                if len(one_data) % 9 == 5:
+                    subject.append(iter)
+                if len(one_data) % 9 == 6:
+                    teacher.append(iter)
+                if len(one_data) % 9 == 7:
+                    aud.append(iter)
+                if len(one_data) % 9 == 8:
+                    subj_type.append(iter)
+                # if len(one_data) % 9 == 0:
+                #     comment.append(iter)
+            #print(f'Факультет {fak} {len(fak)} \n Курс {kurs} {len(kurs)} \n Группа {grup} {len(grup)} \nДень {day} {len(day)} \n Пары {lesson} {len(lesson)} \n Неделя {week} {len(week)} \n Подгруппа {p_group} {len(p_group)} \n Предмет {subject} {len(subject)} \n Препод {teacher} {len(teacher)} \n Аудитория {aud} {len(aud)} \n Тип {subj_type} {len(subj_type)} \n Коммент {comment} {len(comment)} \n')
+    if len(day)==len(lesson)==len(week)==len(p_group)==len(subject)==len(teacher)==len(aud)==len(subj_type):
+        # print(len(day))
+        connection = sqlite3.connect('e_journal.db')
+        cursor = connection.cursor()
+        for i in range(1, len(day)):
+            cursor.execute(""" 
+            INSERT INTO parse_schedule (faculty, course, full_group, week, day, number_lesson, subject, teacher, aud, subj_type, p_group)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+            """, (fak, kurs, grup, week, day, lesson, subject, teacher, aud, subj_type, p_group))
+
+    # for it in dirty_data:
+    #     for iter in it:
+    #         if iter:
+    #             if len(iter) <= 2:
+    #                 del iter
+    #                 continue
+    #             data.append(iter)
+    #             for elem in iter:
+    #                 if elem.strip() == '\xa0':
+    #                     elem = ""
+    #                 data.append(elem.strip())
 
     # day = []
     # lesson = []
@@ -117,27 +163,22 @@ def isit1():
     #     if len(element) <= 2:
     #         del element
 
-    #     day.append(element[0])
-    #     lesson.append(element[1])
-    #     week.append(element[2])
-    #     p_group.append(element[3])
-    #     subject.append(element[4])
-    #     teacher.append(element[5])
-    #     aud.append(element[6])
-    #     subj_type.append(element[7])
-    #     comment.append(element[8])
+        # day.append(element[0])
+        # lesson.append(element[1])
+        # week.append(element[2])
+        # p_group.append(element[3])
+        # subject.append(element[4])
+        # teacher.append(element[5])
+        # aud.append(element[6])
+        # subj_type.append(element[7])
+        # comment.append(element[8])
 
     # return print(f'Факультет {fak} {len(fak)} \n Курс {kurs} {len(kurs)} \n Группа {grup} {len(grup)} \nДень {day} {len(day)} \n Пары {lesson} {len(lesson)} \n Неделя {week} {len(week)} \n Подгруппа {p_group} {len(p_group)} \n Предмет {subject} {len(subject)} \n Препод {teacher} {len(teacher)} \n Аудитория {aud} {len(aud)} \n Тип {subj_type} {len(subj_type)} \n Коммент {comment} {len(comment)} \n')
-    # connection = sqlite3.connect('e_journal.db')
-    # cursor = connection.cursor()
-    # cursor.execute(""" 
-    #   INSERT INTO parse_schedule (faculty, course, full_group, week, day, number_lesson, subject, teacher, aud, subj_type, p_group)
-    #   VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-    # """, (faculty, course, group, week, day, lesson, subject, teacher, aud, subj_type, p_group))
 
 
 
-    return print(data)
+
+    return print(one_data)
 
 
 
