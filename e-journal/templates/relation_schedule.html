@@ -1,0 +1,16 @@
+{% include 'base.html' %}
+
+
+
+{% block content %}
+	<form action="/relation_schedule" method="post" name="list">
+		<p><select class="choice" name="group_r">
+			<option>Выберите из списка</option>
+			{% for g in group -%}
+				<option value="{{ g.id }}">{{ g.schedule_group_text }}</option>
+			{% endfor -%}
+		</select></p>
+		<!--<p><label>Число пар: </label> <input type="text" name="number" value="" requied />-->
+		<p><input type="submit" class="form-sub" value="Отправить"></p>
+	</form>
+{% endblock %}

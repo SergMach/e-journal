@@ -458,7 +458,7 @@ class DataBase:
 
     def SchUpd(self, num):
         try:
-            import parser
+            #import parser
             self.__cur.execute("DELETE FROM schedule_name")
             self.__db.commit()
             self.__cur.execute("DELETE FROM schedule_group")
