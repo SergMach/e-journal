@@ -139,12 +139,24 @@ def main_parser():
         cursor = connection.cursor()
         for num in range(1, len(day)):
             # print(f'Факультет {fak}\n Курс {kurs}\n Группа {grup}\nДень {day[num]}\n Пары {lesson[num]}\n Неделя {week[num]}\n Подгруппа {p_group[num]}\n Предмет {subject[num]}\n Препод {teacher[num]}\n Аудитория {aud[num]}\n Тип {subj_type[num]}')
-            cursor.execute(""" 
-                INSERT INTO bad_parse (bad_faculty, bad_course, bad_group, bad_week, bad_day, bad_lesson, bad_subject, bad_teacher, bad_aud, bad_subj_type, bad_p_group)
-                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-            """, (fak, kurs, grup, week[num], day[num], lesson[num], subject[num], teacher[num], aud[num], subj_type[num], p_group[num]))
-            connection.commit()
-
+            if p_group[num] != '':
+                cursor.execute(""" 
+                    INSERT INTO bad_parse (bad_faculty, bad_course, bad_group, bad_week, bad_day, bad_lesson, bad_subject, bad_teacher, bad_aud, bad_subj_type, bad_p_group)
+                    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                """, (fak, kurs, grup, week[num], day[num], lesson[num], subject[num], teacher[num], aud[num], subj_type[num], p_group[num]))
+                connection.commit()
+            else:
+                cursor.execute(""" 
+                    INSERT INTO bad_parse (bad_faculty, bad_course, bad_group, bad_week, bad_day, bad_lesson, bad_subject, bad_teacher, bad_aud, bad_subj_type, bad_p_group)
+                    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, NULL)
+                """, (fak, kurs, grup, week[num], day[num], lesson[num], subject[num], teacher[num], aud[num], subj_type[num]))
+                connection.commit()
+        
+        cursor.execute(
+            f"DELETE FROM parse_schedule WHERE trim(full_group) LIKE '{grup}'"
+        )
+        connection.commit()
+        
         '''запись уникального расписания'''
         cursor.execute('''
             INSERT OR REPLACE into parse_schedule (faculty, course, full_group, week, day, number_lesson, subject, teacher, aud, subj_type, p_group) 
