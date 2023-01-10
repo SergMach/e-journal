@@ -152,7 +152,7 @@ def schedule_global():
         try:
             if request.form['group']:
                 group = request.form['group']
-                return render_template("schedule_global.html", menu=dbase.getMenu(), schedule=dbase.getGroupSchedule(group), role=role, group=dbase.getGroupList(), title="Расписание")
+                return render_template("schedule_global.html", menu=dbase.getMenu(), schedule=dbase.getGroupGlobSchedule(group), role=role, group=dbase.getGroupList(), title="Расписание")
         except: pass
     return render_template("schedule_global.html", menu=dbase.getMenu(), role=role, group=dbase.getGroupList(), title="Расписание")
 
@@ -307,4 +307,4 @@ def schedule_redactor():
     else: return render_template("index.html", menu=dbase.getMenu(), title="Редактирование расписания")
 
 if __name__ == "__main__":
-    app.run(host='0.0.0.0')
+    app.run(debug=True)

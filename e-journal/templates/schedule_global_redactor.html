@@ -45,22 +45,122 @@ function myFunction() {
 	<table class="iksweb", border="1">
 		<tbody>
 		{% for m in schedule -%}
-			<tr>
-				<td>{{m.schedule_group_id}}</td>
-				<td>{{m.schedule_day_id}}</td>
-				<td>{{m.schedule_place_id}}</td>
-				<td>{{m.schedule_number_id}}</td>
-				<td>{{m.schedule_time_id}}</td>
-				{% if m.p_g %}
-					<td>{{m.p_g}}</td>
-				{% else %}
+			{% if m.name %}
+			<form action="/schedule_global_redactor" method="post" class="form-contact">
+			{% for i in number -%}
+				<tr>
+					<td><p><select class="choice" name="schedule_group_delete">
+						<option value="{{schedule_group}}" selected>{{m.group_c}}</option>
+					</select></p></td>
+						<td><p><select class="choice" name="day_delete">
+						<option value="{{m.day_id}}">{{m.day}}</option>
+					</select></p></td>
+						<td><p><select class="choice" name="place_delete">
+						<option value="{{m.week_id}}">{{m.week}}</option>
+					</select></p></td>
+						<td><p><select class="choice" name="time_delete">
+						<option value="{{m.tim_id}}">{{m.tim}}</option>
+					</select></p></td>
+						<td><p><select class="choice" name="asdasq">
+						<option value="">{{m.numb}}</option>
+					</select></p></td>
+						<td><p><select class="choice" name="p_group_delete">
+							{% if m.p_group %}
+								<option value="{{m.p_group}}">{{m.p_group}}</option>
+							{% else %}
+								<option value="0">Без подгруппы</option>
+							{% endif %}
+					</select></p></td>
+						<td><p><select class="choice" name="asdasqw">
+						<option value="">{{m.name}}</option>
+					</select></p></td>
+						<td><p><select class="choice" name="asdasqw">
+						<option value="">{{m.n_type}}</option>
+					</select></p></td>
+						<td><p><select class="choice" name="asdasqw">
+						<option value="">{{m.teach}}</option>
+					</select></p></td>
+						<td><p><select class="choice" name="asdasqw">
+						<option value="">{{m.aud}}</option>
+					</select></p></td>
+				<td><p><input type="submit" class="form-sub" value="Удалить" /></td>
+				</tr>
+			</form>
+			{% endfor -%}
+
+			{% else %}
+
+			<form action="/schedule_global_redactor" method="post" class="form-contact">
+			{% for i in number -%}
+				<tr>
+					<td>
+						<p><select class="choice" name="schedule_group">
+							<option value="{{schedule_group}}" selected>Свободное время</option>
+						</select></p>
+					</td>
+
+					<td>
+						<p><select class="choice" name="day">
+							<option value="{{m.day_id}}">{{m.day}}</option>
+						</select></p>
+					</td>
+					<td>
+						<p><select class="choice" name="place">
+							<option value="{{m.week_id}}">{{m.week}}</option>
+						</select></p>
+					</td>
+					<td>
+						<p><select class="choice" name="nonamedsa">
+							<option value="">{{m.tim}}</option>
+						</select></p>
+					</td>
+					<td>
+						<p><select class="choice" name="time">
+							<option value="{{m.tim_id}}">{{m.numb}}</option>
+						</select></p>
+					</td>
+					<td>
+						<p><select class="choice" name="p_group">
+							<option value="0">Без подгруппы</option>
+							<option value="1">Подгруппа 1</option>
+							<option value="2">Подгруппа 2</option>
+							<option value="3">Подгруппа 3</option>
+						</select></p>
+					</td>
+					<td>
+						<p><select class="choice" name="name", id="jqueryselect">
+							<option value='"", "", ""'>Предмет</option>
+							{% for n in name -%}
+							<option value="{{ n.id }}, {{n.check_id}}, {{n.list_p_group}}">{{ n.list_name }} {{ n.list_type }}
+								{% if n.list_p_group %}
+									Для подгруппы
+								{% else %}
+
+								{% endif %}
+							</option>
+							{% endfor -%}
+						</select></p>
+					</td>
 					<td></td>
-				{% endif %}
-				<td>{{m.schedule_name_id}}</td>
-				<td>{{m.schedule_type_id}}</td>
-				<td>{{m.schedule_teacher_id}}</td>
-				<td>{{m.schedule_aud_id}}</td>
-			</tr>
+					<td>
+						<p><select class="choice" name="teacher">
+							<option value="">Преподаватель</option>
+							{% for t in teacher -%}
+							<option value="{{ t.id }}">{{ t.list_teacher }}</option>
+							{% endfor -%}
+						</select></p></td>
+					<td>
+						<p><select class="choice" name="aud">
+							<option value="">Аудитория</option>
+							{% for a in aud -%}
+							<option value="{{ a.id }}">{{ a.schedule_aud_text }}</option>
+							{% endfor -%}
+						</select></p>
+					</td>
+					<td><p><input type="submit" class="form-sub" value="Добавить" /></form></td>
+				</tr>
+			{% endfor -%}
+			{% endif %}
 		{% endfor -%}
 		</tbody>
 	</table>
@@ -144,8 +244,9 @@ function myFunction() {
 							{% endfor -%}
 						</select></p>
 					</td>
+					<td><p><input type="submit" class="form-sub" value="Добавить" /></form></td>
 				</tr>
-			<tr><p><input type="submit" class="form-sub" value="Добавить" /></form></tr>
+
 		</tbody>
 	</table>
 			{% endfor -%}
@@ -188,7 +289,7 @@ function myFunction() {
 						<option value="6">6. 17:50 - 19:20</option>
 						<option value="7">7. 19:30 - 21:00</option>
 					</select></p></td>
-				<p><input type="submit" class="form-sub" value="Удалить" />
+				<td><p><input type="submit" class="form-sub" value="Удалить" /></td>
 			</form>
 		</tr>
 	</tbody>
